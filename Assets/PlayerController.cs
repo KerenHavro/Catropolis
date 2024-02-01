@@ -27,22 +27,40 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
-            isAttacking = true;
+            Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
 
+            // Trigger different attack animations based on the direction
+            if (direction.x > 0.5f)
+                animator.SetTrigger("AttackRight");
+            else if (direction.x < -0.5f)
+                animator.SetTrigger("AttackLeft");
+            else if (direction.y > 0.5f)
+                animator.SetTrigger("AttackUp");
+            else if (direction.y < -0.5f)
+                animator.SetTrigger("AttackDown");
+
+            isAttacking = true;
+          
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
             if (hit.collider != null)
             {
+    
                 if (hit.collider.CompareTag("Enemy")&& IsInDistance(hit.collider.transform.position) ==true)
                 {
                     IDamagable target = hit.collider.GetComponent<IDamagable>();
                     print("hya!");
                     if (target != null)
                     {
+
                         InflictDamage(target);  // Pass the target variable to the InflictDamage method
+
                     }
                 }
+              
             }
+
             isAttacking = false;
         }
     }
