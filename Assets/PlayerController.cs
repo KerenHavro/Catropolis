@@ -33,11 +33,11 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null)
             {
-                if (hit.collider.CompareTag("Enemy"))
+                if (hit.collider.CompareTag("Enemy")&& IsInDistance(hit.collider.transform.position) ==true)
                 {
                     IDamagable target = hit.collider.GetComponent<IDamagable>();
                     print("hya!");
-                    if (target != null && IsWithinAttackRange(hit.collider.transform.position))
+                    if (target != null)
                     {
                         InflictDamage(target);  // Pass the target variable to the InflictDamage method
                     }
@@ -52,16 +52,14 @@ public class PlayerController : MonoBehaviour
         target.TakeDamage(10);
     }
 
-    bool IsWithinAttackRange(Vector2 targetPosition)
+    bool IsInDistance(Vector2 TargetLocation)
     {
-        // Check if the distance between the player and the target is within the attack range
-        float distance = Vector2.Distance(this.gameObject.transform.position, targetPosition);
-        if (distance <= attackRange)
-        {
-            return true;
-        }
+        float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
+        if (distance <= attackRange) return true;
         else return false;
     }
+
+  
 
 
     void FixedUpdate()

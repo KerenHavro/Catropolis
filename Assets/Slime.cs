@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class SlimeEnemy : MonoBehaviour, IDamagable
+public class Slime : MonoBehaviour, IDamagable
 {
     [SerializeField]
     public int maxHealth = 100;
