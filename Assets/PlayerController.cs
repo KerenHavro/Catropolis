@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,14 +7,13 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Animator animator;
     private bool isAttacking = false;
+    public float attackRange = 2f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
     }
-
 
     void Update()
     {
@@ -41,7 +37,7 @@ public class PlayerController : MonoBehaviour
                 {
                     IDamagable target = hit.collider.GetComponent<IDamagable>();
                     print("hya!");
-                    if (target != null)
+                    if (target != null && IsWithinAttackRange(hit.collider.transform.position))
                     {
                         InflictDamage(target);  // Pass the target variable to the InflictDamage method
                     }
@@ -49,20 +45,29 @@ public class PlayerController : MonoBehaviour
             }
             isAttacking = false;
         }
+    }
 
-        void InflictDamage(IDamagable target)
+    void InflictDamage(IDamagable target)
+    {
+        target.TakeDamage(10);
+    }
+
+    bool IsWithinAttackRange(Vector2 targetPosition)
+    {
+        // Check if the distance between the player and the target is within the attack range
+        float distance = Vector2.Distance(this.gameObject.transform.position, targetPosition);
+        if (distance <= attackRange)
         {
-
-            target.TakeDamage(10);
+            return true;
         }
+        else return false;
     }
 
 
-
-void FixedUpdate()
-{
-    // Movement
-    Vector2 moveVelocity = moveInput.normalized * speed;
-    rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
-}
+    void FixedUpdate()
+    {
+        // Movement
+        Vector2 moveVelocity = moveInput.normalized * speed;
+        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+    }
 }
