@@ -40,12 +40,12 @@ public class Player : MonoBehaviour, IDamagable
         Debug.Log("Player has died!");
     }
 
-    public void InflictDamage(IDamagable target)
+    public void InflictDamage(IDamagable Enemy)
     {
         // Assuming target is also IDamagable
-        if (target != null)
+        if (Enemy != null)
         {
-            target.TakeDamage(10); // Inflict 10 damage
+            Enemy.TakeDamage(10); // Inflict 10 damage
         }
     }
 }

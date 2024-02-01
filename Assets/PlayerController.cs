@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
     void Update()
     {
         // Input
@@ -28,29 +29,40 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Vertical", moveInput.y);
         animator.SetFloat("Speed", moveInput.sqrMagnitude);
 
-
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
             isAttacking = true;
 
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
-
-            if (hit.collider.CompareTag("Player"))
+            if (hit.collider != null)
             {
-                print("hya!");
-                
-
-
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    IDamagable target = hit.collider.GetComponent<IDamagable>();
+                    print("hya!");
+                    if (target != null)
+                    {
+                        InflictDamage(target);  // Pass the target variable to the InflictDamage method
+                    }
+                }
             }
             isAttacking = false;
         }
+
+        void InflictDamage(IDamagable target)
+        {
+
+            target.TakeDamage(10);
+        }
     }
 
-    void FixedUpdate()
-    {
-        // Movement
-        Vector2 moveVelocity = moveInput.normalized * speed;
-        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
-    }
+
+
+void FixedUpdate()
+{
+    // Movement
+    Vector2 moveVelocity = moveInput.normalized * speed;
+    rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+}
 }
