@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("AttackDown");
 
         // Add delay based on your attack animation duration
-        yield return new WaitForSeconds(1.2f); // Adjust this value based on your animation length
+        yield return new WaitForSeconds(0.4f); // Adjust this value based on your animation length
 
         // Resume walking animation
         animator.SetBool("IsWalking", true);
