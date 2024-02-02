@@ -1,4 +1,6 @@
+
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +21,20 @@ public class PlayerController : MonoBehaviour
     {
         // Input
         moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
+        // Determine the primary movement direction
+        if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput))
+        {
+            // Moving horizontally
+            moveInput = new Vector2(horizontalInput, 0f);
+        }
+        else
+        {
+            // Moving vertically
+            moveInput = new Vector2(0f, verticalInput);
+        }
         // Update Animator parameters
         animator.SetFloat("Horizontal", moveInput.x);
         animator.SetFloat("Vertical", moveInput.y);
@@ -27,6 +42,27 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
+            speed = 0;
+            StartCoroutine(WaitForThreeSeconds());
+        }
+
+        void InflictDamage(IDamagable target)
+        {
+            target.TakeDamage(10);
+        }
+
+        bool IsInDistance(Vector2 TargetLocation)
+        {
+            float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
+            if (distance <= attackRange) return true;
+            else return false;
+        }
+
+
+        IEnumerator WaitForThreeSeconds()
+        {
+            yield return new WaitForSeconds(1f);
+            speed = 5;
             Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
 
@@ -41,13 +77,13 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger("AttackDown");
 
             isAttacking = true;
-          
+
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
             if (hit.collider != null)
             {
-    
-                if (hit.collider.CompareTag("Enemy")&& IsInDistance(hit.collider.transform.position) ==true)
+
+                if (hit.collider.CompareTag("Enemy") && IsInDistance(hit.collider.transform.position) == true)
                 {
                     IDamagable target = hit.collider.GetComponent<IDamagable>();
                     print("hya!");
@@ -58,32 +94,17 @@ public class PlayerController : MonoBehaviour
 
                     }
                 }
-              
+                isAttacking = false;
+                // Code to be executed after waiting for 3 seconds
             }
-
-            isAttacking = false;
         }
     }
-
-    void InflictDamage(IDamagable target)
-    {
-        target.TakeDamage(10);
-    }
-
-    bool IsInDistance(Vector2 TargetLocation)
-    {
-        float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
-        if (distance <= attackRange) return true;
-        else return false;
-    }
-
-  
-
 
     void FixedUpdate()
     {
         // Movement
         Vector2 moveVelocity = moveInput.normalized * speed;
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+
     }
 }
