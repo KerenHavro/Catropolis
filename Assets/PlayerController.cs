@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        animator.SetBool("IsWalking", true);
     }
 
     void Update()
@@ -33,49 +35,49 @@ public class PlayerController : MonoBehaviour
             // Moving vertically
             moveInput = new Vector2(0f, verticalInput);
         }
+
         // Update Animator parameters
         animator.SetFloat("Horizontal", moveInput.x);
         animator.SetFloat("Vertical", moveInput.y);
         animator.SetFloat("Speed", moveInput.sqrMagnitude);
 
+        // Check for an attack input
         if (Input.GetMouseButtonDown(0) && !isAttacking)
         {
-            Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-
-            // Trigger different attack animations based on the direction
-            if (direction.x > 0.5f)
-                animator.SetTrigger("AttackRight");
-            else if (direction.x < -0.5f)
-                animator.SetTrigger("AttackLeft");
-            else if (direction.y > 0.5f)
-                animator.SetTrigger("AttackUp");
-            else if (direction.y < -0.5f)
-                animator.SetTrigger("AttackDown");
-
-            isAttacking = true;
-
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-            if (hit.collider != null)
-            {
-
-                if (hit.collider.CompareTag("Enemy") && IsInDistance(hit.collider.transform.position) == true)
-                {
-                    IDamagable target = hit.collider.GetComponent<IDamagable>();
-                    print("hya!");
-                    if (target != null)
-                    {
-
-                        InflictDamage(target);  // Pass the target variable to the InflictDamage method
-
-                    }
-                }
-
-            }
-
-            isAttacking = false;
+            StartCoroutine(AttackAnimation());
         }
+    }
+
+    IEnumerator AttackAnimation()
+    {
+        speed = 0;
+        isAttacking = true;
+
+        // Stop walking animation
+        animator.SetBool("IsWalking", false);
+
+        Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+
+        // Trigger different attack animations based on the direction
+        if (direction.x > 0.5f)
+            animator.SetTrigger("AttackRight");
+        else if (direction.x < -0.5f)
+            animator.SetTrigger("AttackLeft");
+        else if (direction.y > 0.5f)
+            animator.SetTrigger("AttackUp");
+        else if (direction.y < -0.5f)
+            animator.SetTrigger("AttackDown");
+
+        // Add delay based on your attack animation duration
+        yield return new WaitForSeconds(1.2f); // Adjust this value based on your animation length
+
+        // Resume walking animation
+        animator.SetBool("IsWalking", true);
+
+        // Reset attack flag
+        isAttacking = false;
+        speed = 5;
     }
 
     void InflictDamage(IDamagable target)
@@ -86,12 +88,8 @@ public class PlayerController : MonoBehaviour
     bool IsInDistance(Vector2 TargetLocation)
     {
         float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
-        if (distance <= attackRange) return true;
-        else return false;
+        return distance <= attackRange;
     }
-
-
-
 
     void FixedUpdate()
     {
