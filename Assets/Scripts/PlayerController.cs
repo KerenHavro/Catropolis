@@ -86,14 +86,14 @@ public class PlayerController : MonoBehaviour
         // Add delay based on your attack animation duration
         yield return new WaitForSeconds(0.4f); // Adjust this value based on your animation length
 
-        // Resume walking animation
+      
         animator.SetBool("IsWalking", true);
-
-
-
-        // Reset attack flag
         isAttacking = false;
         speed = 5;
+        animator.ResetTrigger("AttackDown");
+        animator.ResetTrigger("AttackUp");
+        animator.ResetTrigger("AttackRight");
+        animator.ResetTrigger("AttackLeft");
     }
 
     void InflictDamage(IDamagable target)
