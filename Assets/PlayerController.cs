@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
         // Trigger different attack animations based on the direction
         if (direction.x > 0.5f)
@@ -69,11 +70,26 @@ public class PlayerController : MonoBehaviour
         else if (direction.y < -0.5f)
             animator.SetTrigger("AttackDown");
 
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("Enemy") && IsInDistance(hit.collider.transform.position))
+            {
+                IDamagable target = hit.collider.GetComponent<IDamagable>();
+                print("hya!");
+                if (target != null)
+                {
+                    InflictDamage(target);  // Pass the target variable to the InflictDamage method
+                }
+            }
+        } 
+
         // Add delay based on your attack animation duration
         yield return new WaitForSeconds(0.4f); // Adjust this value based on your animation length
 
         // Resume walking animation
         animator.SetBool("IsWalking", true);
+
+        
 
         // Reset attack flag
         isAttacking = false;
