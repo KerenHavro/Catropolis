@@ -11,9 +11,11 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
 
+    
+
 
     [SerializeField]
-    private int maxHealth = 100;
+    public int maxHealth = 100;
     [SerializeField]
     private int currentHealth;
     public Transform player;
@@ -27,7 +29,8 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Start()
     {
-       
+        //healthBar.SetMaxHealth(maxHealth);
+
         currentState = PatrolState;
         currentHealth = maxHealth;
         
@@ -102,6 +105,7 @@ public class Slime : MonoBehaviour, IDamagable
     {
         Vector2 damageSourcePosition = player.position;
         currentHealth -= damageAmount;
+        //healthBar.SetHealth(currentHealth);
         ApplyKnockback(damageSourcePosition);
 
 
