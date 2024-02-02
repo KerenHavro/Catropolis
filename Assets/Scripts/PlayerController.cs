@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isAttacking = false;
     public float attackRange = 2f;
+   
 
     void Start()
     {
@@ -78,7 +79,9 @@ public class PlayerController : MonoBehaviour
                 print("hya!");
                 if (target != null)
                 {
-                    InflictDamage(target);  // Pass the target variable to the InflictDamage method
+                    InflictDamage(target);
+                  
+                    // Pass the target variable to the InflictDamage method
                 }
             }
         }
@@ -99,15 +102,22 @@ public class PlayerController : MonoBehaviour
     void InflictDamage(IDamagable target)
     {
         target.TakeDamage(10);
+      
+
+
+
     }
 
+ 
     bool IsInDistance(Vector2 TargetLocation)
     {
         float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
         return distance <= attackRange;
     }
+  
 
-    void FixedUpdate()
+
+        void FixedUpdate()
     {
         // Movement
         Vector2 moveVelocity = moveInput.normalized * speed;

@@ -48,4 +48,5 @@ public class Player : MonoBehaviour, IDamagable
             Enemy.TakeDamage(10); // Inflict 10 damage
         }
     }
+
 }
