@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Slime : MonoBehaviour, IDamagable
 {
+    public HealthBar healthBar;
     public float patrolSpeed = 2f;
     public float chaseSpeed = 2f;
     public float attackRange = 1f;
@@ -29,7 +30,7 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Start()
     {
-        //healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetMaxHealth(maxHealth);
 
         currentState = PatrolState;
         currentHealth = maxHealth;
@@ -105,7 +106,7 @@ public class Slime : MonoBehaviour, IDamagable
     {
         Vector2 damageSourcePosition = player.position;
         currentHealth -= damageAmount;
-        //healthBar.SetHealth(currentHealth);
+        healthBar.SetHealth(currentHealth);
         ApplyKnockback(damageSourcePosition);
 
 
