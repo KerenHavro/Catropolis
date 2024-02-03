@@ -11,7 +11,7 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackSpeed = 5f;
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
-    //public Animator animator;
+   public Animator animator;
 
 
 
