@@ -43,8 +43,9 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", moveInput.sqrMagnitude);
 
         // Check for an attack input
-        if (Input.GetMouseButtonDown(0) && !isAttacking)
+        if (Input.GetMouseButton(0) && !isAttacking)
         {
+            animator.SetBool("IsWalking", false);
             StartCoroutine(AttackAnimation());
         }
     }
@@ -89,14 +90,14 @@ public class PlayerController : MonoBehaviour
         // Add delay based on your attack animation duration
         yield return new WaitForSeconds(0.4f); // Adjust this value based on your animation length
 
-      
-        animator.SetBool("IsWalking", true);
-        isAttacking = false;
-        speed = 5;
         animator.ResetTrigger("AttackDown");
         animator.ResetTrigger("AttackUp");
         animator.ResetTrigger("AttackRight");
         animator.ResetTrigger("AttackLeft");
+        animator.SetBool("IsWalking", true);
+        isAttacking = false;
+        speed = 5;
+   
     }
 
     void InflictDamage(IDamagable target)
