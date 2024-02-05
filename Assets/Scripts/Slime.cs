@@ -106,11 +106,12 @@ public class Slime : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damageAmount)
     {
+        animator.SetBool("Hit", true);
         Vector2 damageSourcePosition = player.position;
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
         ApplyKnockback(damageSourcePosition);
-        animator.SetBool("Hit", true);
+        
 
         if (currentHealth <= 0)
         {
@@ -153,7 +154,7 @@ public class Slime : MonoBehaviour, IDamagable
             yield return null; // Wait for the next frame
         }
 
-        //animator.SetBool("Hit", false);
+        animator.SetBool("Hit", false);
         currentState = ChaseState;
     }
 }
