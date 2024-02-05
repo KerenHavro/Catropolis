@@ -11,7 +11,7 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackSpeed = 5f;
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
-   public Animator animator;
+    public Animator animator;
 
 
 
@@ -31,7 +31,7 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Start()
     {
-        //animator.SetBool("Hit", false);
+        animator.SetBool("Hit", false);
         healthBar.SetMaxHealth(maxHealth);
 
         currentState = PatrolState;
@@ -110,7 +110,7 @@ public class Slime : MonoBehaviour, IDamagable
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
         ApplyKnockback(damageSourcePosition);
-        //animator.SetBool("Hit", true);
+        animator.SetBool("Hit", true);
 
         if (currentHealth <= 0)
         {
