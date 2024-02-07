@@ -5,14 +5,25 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     public GameObject InventoryMenu;
+    public GameObject HotBarMenu;
     private bool menuActivated;
     public ItemSlot[] itemSlot;
+    
+    [SerializeField]
+    Transform newParentTransform;
+    [SerializeField]
+    Transform oldParentTransform;
 
     public ItemSO[] itemSOs;
     // Start is called before the first frame update
     void Start()
     {
+        HotBarMenu.SetActive(true);
         InventoryMenu.SetActive(false);
+        for (int i = 0; i < 7; i++)
+        {
+            itemSlot[i].transform.SetParent(newParentTransform);
+        }
     }
 
     // Update is called once per frame
@@ -20,15 +31,25 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory") && menuActivated)
         {
+            HotBarMenu.SetActive(true);
+            for (int i = 0; i < 7; i++)
+            {
+               itemSlot[i].transform.SetParent(newParentTransform);
+            }
             InventoryMenu.SetActive(false);
             menuActivated = false;
             Time.timeScale = 1f;
         }
         else if (Input.GetButtonDown("Inventory") && !menuActivated)
         {
+            for (int i = 0; i < 7; i++)
+            {
+               itemSlot[i].transform.SetParent(oldParentTransform);
+            }
             Time.timeScale = 0;
             InventoryMenu.SetActive(true);
             menuActivated = true;
+            HotBarMenu.SetActive(false);
         }
     }
     public bool UseItem(string itemName)
