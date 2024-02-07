@@ -62,11 +62,12 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         this.quantity += quantity;
         if (this.quantity >= maxNumberOfItems)
         {
-            quantityText.text = quantity.ToString();
+            quantityText.text = maxNumberOfItems.ToString();
             quantityText.enabled = true;
             isFull = true;
 
             //return the LEFTOVERS
+            
             int extraItems = this.quantity - maxNumberOfItems;
             this.quantity = maxNumberOfItems;
             return extraItems;
