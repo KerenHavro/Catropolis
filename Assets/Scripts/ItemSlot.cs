@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using System;
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
+
     public string ItemName;
     public int quantity;
     public Sprite itemSprite;
@@ -18,10 +19,16 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Image itemImage;
 
+    [SerializeField]
     public GameObject selectedShader;
     public bool thisItemSelected;
 
+    private InventoryManager inventoryManager;
 
+    public void Start()
+    {
+        inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
+    }
 
     public void AddItem(string itemName, int quantity, Sprite itemSprite)
     {
@@ -37,7 +44,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
             OnLeftClick();
         }
@@ -49,13 +56,14 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnLeftClick()
     {
-      selectedShader.SetActive(true);
+        inventoryManager.DeselectAllSlots();
+        selectedShader.SetActive(true);
         thisItemSelected = true;
     }
 
     public void OnRightClick()
     {
-    
+
     }
 
 }
