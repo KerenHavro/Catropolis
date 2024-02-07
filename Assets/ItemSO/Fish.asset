@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b314f2a5e23c2be4182b94bf832ac8ee, type: 3}
   m_Name: Fish
   m_EditorClassIdentifier: 
-  ItwmName: 
-  statToChange: 0
+  itemName: Fish
+  statToChange: 1
+  amountToChangeStat: 10
+  attributesToChange: 0
+  amountToChangeAttribute: 0

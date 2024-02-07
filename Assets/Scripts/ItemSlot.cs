@@ -122,9 +122,12 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     private void EmptySlot()
     {
+        itemName="";
+        quantityText.text = 0.ToString();
         quantityText.enabled = false;
-        itemImage.sprite = emptySprite;
-
+        itemImage.sprite = null;
+        itemSprite = emptySprite;
+        this.itemDescription = "";
         ItemDescriptionNameText.text = "";
         ItemDescriptionText.text = "";
         itemDescriptionImage.sprite = emptySprite;
