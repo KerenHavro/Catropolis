@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IDamagable
 {
     
     public int maxHealth = 100;
+    [SerializeField]
     private int currentHealth;
 
 
