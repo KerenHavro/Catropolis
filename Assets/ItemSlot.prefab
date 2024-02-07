@@ -172,6 +172,8 @@ MonoBehaviour:
   isFull: 0
   quantityText: {fileID: 4370017584362600103}
   itemImage: {fileID: 3125442962586207477}
+  selectedShader: {fileID: 9107489580096137448}
+  thisItemSelected: 0
 --- !u!1 &5038454093113940504
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,8 +342,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.16100311, y: -0.32199097}
-  m_SizeDelta: {x: 11.266, y: 10.301}
+  m_AnchoredPosition: {x: -1.4725037, y: -0.5260925}
+  m_SizeDelta: {x: 30.8676, y: 31.9445}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5234831024395734528
 CanvasRenderer:
