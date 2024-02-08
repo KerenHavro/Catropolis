@@ -81,8 +81,18 @@ public class PlayerController : MonoBehaviour
                 if (target != null)
                 {
                     InflictDamage(target);
-                  
+
                     // Pass the target variable to the InflictDamage method
+                }
+            }
+            if (hit.collider.CompareTag("Object") && IsInDistance(hit.collider.transform.position))
+            {
+                MineableObject mineableObject = hit.collider.GetComponent<MineableObject>();
+
+                if (mineableObject != null)
+                {
+                    // Mine the object
+                    mineableObject.Mine();
                 }
             }
         }
