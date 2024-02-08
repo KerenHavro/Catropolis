@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isAttacking = false;
     public float attackRange = 2f;
-   
+
 
     void Start()
     {
@@ -81,12 +81,20 @@ public class PlayerController : MonoBehaviour
                 if (target != null)
                 {
                     InflictDamage(target);
-                  
+
                     // Pass the target variable to the InflictDamage method
                 }
             }
+            if (hit.collider.CompareTag("Object") && IsInDistance(hit.collider.transform.position))
+            {
+                MineableObject mineableObject = hit.collider.GetComponent<MineableObject>();
+                if (mineableObject != null)
+                {
+                    mineableObject.Mine();
+                    Debug.Log("Mine");
+                }
+            }
         }
-
         // Add delay based on your attack animation duration
         yield return new WaitForSeconds(0.4f); // Adjust this value based on your animation length
 
@@ -97,28 +105,28 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsWalking", true);
         isAttacking = false;
         speed = 5;
-   
+
     }
 
     void InflictDamage(IDamagable target)
     {
         target.TakeDamage(10);
-      
+
 
 
 
     }
 
- 
+
     bool IsInDistance(Vector2 TargetLocation)
     {
         float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
         return distance <= attackRange;
     }
-  
 
 
-        void FixedUpdate()
+
+    void FixedUpdate()
     {
         // Movement
         Vector2 moveVelocity = moveInput.normalized * speed;
