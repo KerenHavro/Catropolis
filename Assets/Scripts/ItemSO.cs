@@ -10,10 +10,7 @@ public class ItemSO : ScriptableObject
     public int amountToChangeStat;
     public AttributesToChange attributesToChange = new AttributesToChange();
     public int amountToChangeAttribute;
-    //Objects
-        public Sprite sprite;
-        public int health;
-        
+
 
     public bool UseItem()
     {
@@ -44,5 +41,4 @@ public class ItemSO : ScriptableObject
         none,
         defense
     }
-
 }
