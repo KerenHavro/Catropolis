@@ -72,20 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -123,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main cat1-Sheet-export_0
+      name: WalkFront_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b048774ca8c4d1f41831298d3b306a82
-      internalID: 295189107
+      spriteID: f7a31371722a68548ac53e44c2e40dbc
+      internalID: 294598992
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main cat1-Sheet-export_1
+      name: WalkFront_1
       rect:
         serializedVersion: 2
         x: 190
@@ -158,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7d9d4e39934bd3449014148ed6bd70d
-      internalID: -662162143
+      spriteID: dd2476625a508a041ba574af3db3d80c
+      internalID: -1668866198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main cat1-Sheet-export_2
+      name: WalkFront_2
       rect:
         serializedVersion: 2
         x: 380
@@ -179,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6478211ee6627e4439b864a6acb7faae
-      internalID: -2069584867
+      spriteID: e8aaa300f6ad88f43972b60549b8d3ae
+      internalID: 41387530
       vertices: []
       indices: 
       edges: []
@@ -196,9 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      main cat1-Sheet-export_0: 295189107
-      main cat1-Sheet-export_1: -662162143
-      main cat1-Sheet-export_2: -2069584867
+      WalkFront_0: 294598992
+      WalkFront_1: -1668866198
+      WalkFront_2: 41387530
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
