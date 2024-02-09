@@ -11,6 +11,8 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
 
+
+
     public Animator animator;
     public Transform player;
 
@@ -51,14 +53,16 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Patrol()
     {
-        // Move the slime towards the patrol destination using linear interpolation (LERP)
-        transform.position = Vector2.Lerp(transform.position, patrolDestination, patrolSpeed * Time.deltaTime);
-
+        
+        if (Vector2.Distance(transform.position, patrolDestination) > 0.1f)
+        {
+            // Move the slime towards the patrol destination using linear interpolation (LERP)
+            transform.position = Vector2.MoveTowards(transform.position, patrolDestination, patrolSpeed * Time.deltaTime);
+        }
         // Check if the distance between the slime and the patrol destination is small enough
         if (Vector2.Distance(transform.position, patrolDestination) < 0.1f)
         {
-            // Start waiting before the next patrol
-            StartCoroutine(WaitBeforeNextPatrol());
+            SetNewPatrolDestination();
         }
 
         // Check if the player is within chase range
@@ -101,9 +105,9 @@ public class Slime : MonoBehaviour, IDamagable
 
     void SetNewPatrolDestination()
     {
-        patrolDestination = initialPosition + Random.insideUnitCircle * 10f;
+        patrolDestination = initialPosition + Random.insideUnitCircle * 5f;
 
-
+        Patrol();
 
     }
 
@@ -158,12 +162,6 @@ public class Slime : MonoBehaviour, IDamagable
         animator.SetBool("Hit", false);
         currentState = ChaseState;
     }
-    IEnumerator WaitBeforeNextPatrol()
-    {
-        patrolSpeed = 0; // Stop the slime
-        yield return new WaitForSeconds(3f); // Wait for 3 seconds
-        patrolSpeed = 2f; // Resume patrol speed
-        SetNewPatrolDestination(); // Set a new random destination within the patrol radius
-    }
+    
 
 }
