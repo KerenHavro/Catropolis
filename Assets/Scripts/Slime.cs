@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Slime : MonoBehaviour, IDamagable
@@ -11,32 +10,27 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackSpeed = 5f;
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
+
     public Animator animator;
-
-
-
-
-    [SerializeField]
-    public int maxHealth = 100;
-    [SerializeField]
-    private int currentHealth;
     public Transform player;
 
+    [SerializeField] private int maxHealth = 100;
+    private int currentHealth;
     private const int PatrolState = 0;
     private const int ChaseState = 1;
     private const int AttackState = 2;
- 
-
     private int currentState;
+    private Vector2 initialPosition;
+    private Vector2 patrolDestination;
 
     void Start()
     {
+        initialPosition = transform.position; // Set initial position
+        SetNewPatrolDestination(); // Set initial patrol destination
         animator.SetBool("Hit", false);
         healthBar.SetMaxHealth(maxHealth);
-
         currentState = PatrolState;
         currentHealth = maxHealth;
-        
     }
 
     void Update()
@@ -52,17 +46,18 @@ public class Slime : MonoBehaviour, IDamagable
             case AttackState:
                 Attack();
                 break;
-        
         }
     }
 
     void Patrol()
     {
-        // Implement patrolling behavior here
-
-        // Example: Move left and right
-        transform.Translate(Vector2.left * patrolSpeed * Time.deltaTime);
-
+        // Move towards the patrol destination
+        transform.position = Vector2.MoveTowards(transform.position, patrolDestination, patrolSpeed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, patrolDestination) < 0.1f)
+        {
+            // Set a new random destination within the patrol radius
+            SetNewPatrolDestination();
+        }
         // Check if the player is within chase range
         if (Vector2.Distance(transform.position, player.position) < chaseRange)
         {
@@ -72,7 +67,6 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Chase()
     {
-
         // Implement chasing behavior here
         transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
 
@@ -102,7 +96,11 @@ public class Slime : MonoBehaviour, IDamagable
         }
     }
 
-
+    void SetNewPatrolDestination()
+    {
+        // Generate a random patrol destination within a certain range around the initial position
+        patrolDestination = initialPosition + Random.insideUnitCircle * 5f;
+    }
 
     public void TakeDamage(int damageAmount)
     {
@@ -111,7 +109,6 @@ public class Slime : MonoBehaviour, IDamagable
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
         ApplyKnockback(damageSourcePosition);
-        
 
         if (currentHealth <= 0)
         {
@@ -128,10 +125,9 @@ public class Slime : MonoBehaviour, IDamagable
 
     void ApplyKnockback(Vector2 damageSourcePosition)
     {
-       
-            StartCoroutine(KnockbackCoroutine(damageSourcePosition));
-        
+        StartCoroutine(KnockbackCoroutine(damageSourcePosition));
     }
+
     IEnumerator KnockbackCoroutine(Vector2 damageSourcePosition)
     {
         // Calculate knockback direction based on the damage source position
