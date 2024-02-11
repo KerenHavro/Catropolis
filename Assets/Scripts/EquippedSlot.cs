@@ -28,10 +28,10 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
     //OTHER VARIABLES//
     private bool slotInUse;
     [SerializeField]
-    private GameObject selectedShader;
+    public GameObject selectedShader;
 
     [SerializeField]
-    private bool thisItemSelected;
+    public bool thisItemSelected;
 
     [SerializeField]
     private Sprite emptySprite;

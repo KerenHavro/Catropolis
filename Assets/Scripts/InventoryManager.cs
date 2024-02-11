@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
    
     public ItemSlot[] itemSlot;
     public EquipmentSlot[] equipmentSlot;
+    public EquippedSlot[] equippedSlot;
 
     [SerializeField]
     Transform newParentTransform;
@@ -24,7 +25,7 @@ public class InventoryManager : MonoBehaviour
         HotBarMenu.SetActive(true);
         InventoryMenu.SetActive(false);
         EquipmentMenu.SetActive(false);
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             itemSlot[i].transform.SetParent(newParentTransform);
         }
@@ -50,7 +51,7 @@ public class InventoryManager : MonoBehaviour
         if (EquipmentMenu.activeSelf)
         {
             HotBarMenu.SetActive(true);
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 itemSlot[i].transform.SetParent(newParentTransform);
             }
@@ -61,7 +62,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 itemSlot[i].transform.SetParent(oldParentTransform);
             }
@@ -79,7 +80,7 @@ public class InventoryManager : MonoBehaviour
         if (InventoryMenu.activeSelf)
         {
             HotBarMenu.SetActive(true);
-           for (int i = 0; i < 7; i++)
+           for (int i = 0; i < 8; i++)
             {
                 itemSlot[i].transform.SetParent(newParentTransform);
             }
@@ -90,7 +91,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 itemSlot[i].transform.SetParent(oldParentTransform);
             }
@@ -167,6 +168,14 @@ public class InventoryManager : MonoBehaviour
             equipmentSlot[i].thisItemSelected = false;
 
         }
+
+        for (int i = 0; i < equippedSlot.Length; i++)
+        {
+            equippedSlot[i].selectedShader.SetActive(false);
+            equippedSlot[i].thisItemSelected = false;
+
+        }
+
     }
 
 }
