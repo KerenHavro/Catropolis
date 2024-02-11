@@ -8,8 +8,8 @@ using System;
 
 public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 {
-{
-{
+
+
     //=====ITEM DATA=====
     public string itemName;
     public int quantity;
