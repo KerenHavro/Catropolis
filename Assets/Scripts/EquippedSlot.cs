@@ -72,7 +72,7 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void EquipGear(Sprite itemSprite, string itemName, string itemDescription)
+    public void EquipGear(Sprite itemSprite, string itemName, string itemDescription, ItemType itemType)
     {
         if (slotInUse)
             UnEquipGear();
@@ -81,6 +81,8 @@ public class EquippedSlot : MonoBehaviour, IPointerClickHandler
         this.itemSprite = itemSprite;
         slotImage.sprite = this.itemSprite;
         slotName.enabled = false;
+
+        this.itemType = itemType;
 
 
         //update Data

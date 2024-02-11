@@ -99,21 +99,21 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     private void EquipGear()
     {
         if (itemType == ItemType.head)
-            headSlot.EquipGear(itemSprite, itemName, itemDescription);
+            headSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.cloak)
-            cloakSlot.EquipGear(itemSprite, itemName, itemDescription);
+            cloakSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.body)
-            bodySlot.EquipGear(itemSprite, itemName, itemDescription);
+            bodySlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.legs)
-            legsSlot.EquipGear(itemSprite, itemName, itemDescription);
+            legsSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.mainHand)
-            mainHandSlot.EquipGear(itemSprite, itemName, itemDescription);
+            mainHandSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.offHand)
-            offHandSlot.EquipGear(itemSprite, itemName, itemDescription);
+            offHandSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.relic)
-            relicSlot.EquipGear(itemSprite, itemName, itemDescription);
+            relicSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         if (itemType == ItemType.feet)
-            feetSlot.EquipGear(itemSprite, itemName, itemDescription);
+            feetSlot.EquipGear(itemSprite, itemName, itemDescription, itemType);
         EmptySlot();
     }
 
@@ -125,15 +125,16 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         itemSprite = emptySprite;
         this.itemDescription = "";
         isFull = false;
-        
+        this.quantity = 0;
 
 
     }
 
     public void OnRightClick()
     {
-     
 
+        if (this.quantity != 0)
+        {
             //create a ne item
             GameObject itemToDrop = new GameObject(itemName);
             Item newItem = itemToDrop.AddComponent<Item>();
@@ -148,8 +149,8 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             newItem.itemDescription = itemDescription;
             newItem.itemType = itemType;
 
-        //Create and modify the SR
-        SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
+            //Create and modify the SR
+            SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
             sr.sprite = itemSprite;
             sr.sortingOrder = 5;
             //sr.sortingLayerName = "UI";
@@ -163,7 +164,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             if (this.quantity <= 0)
                 EmptySlot();
 
-        
+        }
     
     }
 
