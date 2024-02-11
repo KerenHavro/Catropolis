@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,10 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject InventoryMenu;
     public GameObject HotBarMenu;
-    private bool menuActivated;
+    public GameObject EquipmentMenu;
+   
     public ItemSlot[] itemSlot;
-    
+
     [SerializeField]
     Transform newParentTransform;
     [SerializeField]
@@ -20,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     {
         HotBarMenu.SetActive(true);
         InventoryMenu.SetActive(false);
+        EquipmentMenu.SetActive(false);
         for (int i = 0; i < 7; i++)
         {
             itemSlot[i].transform.SetParent(newParentTransform);
@@ -29,26 +32,71 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Inventory") && menuActivated)
+        if (Input.GetButtonDown("InventoryMenu"))
+        {
+            Inventory();
+        }
+        if (Input.GetButtonDown("EquipmentMenu"))
+        {
+            Equipment();
+        }
+
+    }
+
+    private void Equipment()
+    {
+
+        if (EquipmentMenu.activeSelf)
         {
             HotBarMenu.SetActive(true);
             for (int i = 0; i < 7; i++)
             {
-               itemSlot[i].transform.SetParent(newParentTransform);
+                itemSlot[i].transform.SetParent(newParentTransform);
             }
             InventoryMenu.SetActive(false);
-            menuActivated = false;
+            EquipmentMenu.SetActive(false);
+
             Time.timeScale = 1f;
         }
-        else if (Input.GetButtonDown("Inventory") && !menuActivated)
+        else
         {
             for (int i = 0; i < 7; i++)
             {
-               itemSlot[i].transform.SetParent(oldParentTransform);
+                itemSlot[i].transform.SetParent(oldParentTransform);
+            }
+            Time.timeScale = 0;
+            InventoryMenu.SetActive(false);
+            EquipmentMenu.SetActive(true);
+
+            HotBarMenu.SetActive(false);
+        }
+    }
+
+
+    void Inventory()
+    {
+        if (InventoryMenu.activeSelf)
+        {
+            HotBarMenu.SetActive(true);
+           for (int i = 0; i < 7; i++)
+            {
+                itemSlot[i].transform.SetParent(newParentTransform);
+            }
+            InventoryMenu.SetActive(false);
+            EquipmentMenu.SetActive(false);
+
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                itemSlot[i].transform.SetParent(oldParentTransform);
             }
             Time.timeScale = 0;
             InventoryMenu.SetActive(true);
-            menuActivated = true;
+            EquipmentMenu.SetActive(false);
+
             HotBarMenu.SetActive(false);
         }
     }
@@ -56,9 +104,9 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < itemSOs.Length; i++)
         {
-            if(itemSOs[i].itemName== itemName)
+            if (itemSOs[i].itemName == itemName)
             {
-              bool usable=  itemSOs[i].UseItem();
+                bool usable = itemSOs[i].UseItem();
                 return usable;
             }
 
