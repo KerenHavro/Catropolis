@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject EquipmentMenu;
    
     public ItemSlot[] itemSlot;
+    public EquipmentSlot[] equipmentSlot;
 
     [SerializeField]
     Transform newParentTransform;
@@ -113,21 +114,44 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
-    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription)
+    public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
     {
-        for (int i = 0; i < itemSlot.Length; i++)
+        if(itemType== ItemType.consumable || itemType == ItemType.collectable ||itemType == ItemType.crafting)
         {
-            if (itemSlot[i].isFull == false && itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0)
-            {
-                int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription);
-                if (leftOverItems > 0)
-                    leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription);
 
-                return leftOverItems;
+            for (int i = 0; i < itemSlot.Length; i++)
+            {
+                if (itemSlot[i].isFull == false && itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0)
+                {
+                    int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
+                    if (leftOverItems > 0)
+                        leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
+
+                    return leftOverItems;
+                }
             }
+            return quantity;
         }
-        return quantity;
+        else
+        {
+
+            for (int i = 0; i < equipmentSlot.Length; i++)
+            {
+                if (equipmentSlot[i].isFull == false && equipmentSlot[i].itemName == itemName || equipmentSlot[i].quantity == 0)
+                {
+                    int leftOverItems = equipmentSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
+                    if (leftOverItems > 0)
+                        leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
+
+                    return leftOverItems;
+                }
+            }
+            return quantity;
+        }
+
     }
+
+ 
 
     public void DeselectAllSlots()
     {
@@ -140,3 +164,18 @@ public class InventoryManager : MonoBehaviour
     }
 
 }
+
+public enum ItemType
+{
+    consumable,
+    crafting,
+    collectable,
+    head,
+    cloak,
+    body,
+    mainHand,
+    offHand,
+    relic,
+    feet,
+    none,
+};

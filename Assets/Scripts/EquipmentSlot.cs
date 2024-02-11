@@ -5,7 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-public class ItemSlot : MonoBehaviour, IPointerClickHandler
+
+public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 {
     //=====ITEM DATA=====
     public string itemName;
@@ -19,16 +20,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private TMP_Text quantityText;
 
-    [SerializeField]
-    public int maxNumberOfItems;
+
 
     //=====ITEM SLOT=====
-   [SerializeField]
+    [SerializeField]
     private Image itemImage;
-
-    public Image itemDescriptionImage;
-    public TMP_Text ItemDescriptionNameText;
-    public TMP_Text ItemDescriptionText;
 
 
 
@@ -63,23 +59,8 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         this.itemDescription = itemDescription;
 
         //Update QUANTITY
-        this.quantity += quantity;
-        if (this.quantity >= maxNumberOfItems)
-        {
-            quantityText.text = maxNumberOfItems.ToString();
-            quantityText.enabled = true;
-            isFull = true;
-
-            //return the LEFTOVERS
-            
-            int extraItems = this.quantity - maxNumberOfItems;
-            this.quantity = maxNumberOfItems;
-            return extraItems;
-        }
-
-        //Update qyantity text
-        quantityText.text = this.quantity.ToString();
-        quantityText.enabled = true;
+        this.quantity = 1;
+        isFull = true;
 
         return 0;
     }
@@ -100,7 +81,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         if (thisItemSelected)
         {
-           bool usable= inventoryManager.UseItem(itemName);
+            bool usable = inventoryManager.UseItem(itemName);
             if (usable)
             {
                 this.quantity -= 1;
@@ -114,32 +95,24 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             inventoryManager.DeselectAllSlots();
             selectedShader.SetActive(true);
             thisItemSelected = true;
-            ItemDescriptionNameText.text = itemName;
-            ItemDescriptionText.text = itemDescription;
-            itemDescriptionImage.sprite = itemSprite;
-            if (itemDescriptionImage.sprite == null)
-            {
-                itemDescriptionImage.sprite = emptySprite;
-            }
+
         }
     }
 
     private void EmptySlot()
     {
-        itemName="";
+        itemName = "";
         quantityText.text = 0.ToString();
         quantityText.enabled = false;
         itemImage.sprite = null;
         itemSprite = emptySprite;
         this.itemDescription = "";
-        ItemDescriptionNameText.text = "";
-        ItemDescriptionText.text = "";
-        itemDescriptionImage.sprite = emptySprite;
+
     }
 
     public void OnRightClick()
     {
-        if (quantityText.text!= 0.ToString())
+        if (quantityText.text != 0.ToString())
         {
 
             //create a ne item
@@ -175,5 +148,5 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         else
             return;
     }
-    
+
 }
