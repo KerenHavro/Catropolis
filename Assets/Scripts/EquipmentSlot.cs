@@ -124,6 +124,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         itemImage.sprite = emptySprite;
         itemSprite = emptySprite;
         this.itemDescription = "";
+        isFull = false;
         
 
 
