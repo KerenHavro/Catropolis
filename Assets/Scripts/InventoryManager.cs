@@ -161,6 +161,12 @@ public class InventoryManager : MonoBehaviour
             itemSlot[i].thisItemSelected = false;
 
         }
+        for (int i = 0; i < equipmentSlot.Length; i++)
+        {
+            equipmentSlot[i].selectedShader.SetActive(false);
+            equipmentSlot[i].thisItemSelected = false;
+
+        }
     }
 
 }
@@ -172,6 +178,7 @@ public enum ItemType
     collectable,
     head,
     cloak,
+    legs,
     body,
     mainHand,
     offHand,

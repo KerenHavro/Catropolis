@@ -19,8 +19,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     public Sprite emptySprite;
     public ItemType itemType;
 
-    [SerializeField]
-    private TMP_Text quantityText;
+
 
 
 
@@ -28,7 +27,9 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Image itemImage;
 
-
+    //=====EQUIPED SLOTS=====
+    [SerializeField]
+    private EquippedSlot headSlot, cloakSlot, bodySlot, legsSlot, mainHandSlot, offHandSlot, relicSlot, feetSlot;
 
     [SerializeField]
     public GameObject selectedShader;
@@ -83,14 +84,9 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     {
         if (thisItemSelected)
         {
-            bool usable = inventoryManager.UseItem(itemName);
-            if (usable)
-            {
-                this.quantity -= 1;
-                quantityText.text = this.quantity.ToString();
-                if (this.quantity <= 0)
-                    EmptySlot();
-            }
+
+            EquipGear();
+            
         }
         else
         {
@@ -100,22 +96,42 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
         }
     }
+    private void EquipGear()
+    {
+        if (itemType == ItemType.head)
+            headSlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.cloak)
+            cloakSlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.body)
+            bodySlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.legs)
+            legsSlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.mainHand)
+            mainHandSlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.offHand)
+            offHandSlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.relic)
+            relicSlot.EquipGear(itemSprite, itemName, itemDescription);
+        if (itemType == ItemType.feet)
+            feetSlot.EquipGear(itemSprite, itemName, itemDescription);
+        EmptySlot();
+    }
 
     private void EmptySlot()
     {
         itemName = "";
-        quantityText.text = 0.ToString();
-        quantityText.enabled = false;
-        itemImage.sprite = null;
+
+        itemImage.sprite = emptySprite;
         itemSprite = emptySprite;
         this.itemDescription = "";
+        
+
 
     }
 
     public void OnRightClick()
     {
-        if (quantityText.text != 0.ToString())
-        {
+     
 
             //create a ne item
             GameObject itemToDrop = new GameObject(itemName);
@@ -129,9 +145,10 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
             newItem.itemName = itemName;
             newItem.sprite = itemSprite;
             newItem.itemDescription = itemDescription;
+            newItem.itemType = itemType;
 
-            //Create and modify the SR
-            SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
+        //Create and modify the SR
+        SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
             sr.sprite = itemSprite;
             sr.sortingOrder = 5;
             //sr.sortingLayerName = "UI";
@@ -142,13 +159,11 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
             //sub the item
             this.quantity -= 1;
-            quantityText.text = this.quantity.ToString();
             if (this.quantity <= 0)
                 EmptySlot();
 
-        }
-        else
-            return;
+        
+    
     }
 
 }
