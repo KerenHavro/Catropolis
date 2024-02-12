@@ -36,11 +36,11 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     public bool thisItemSelected;
 
     private InventoryManager inventoryManager;
-
+    private EquipmentSOLibrary equipmentSOLibrary;
     public void Start()
     {
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
-
+        equipmentSOLibrary = GameObject.Find("InventoryCanvas").GetComponent<EquipmentSOLibrary>();
     }
 
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
@@ -82,18 +82,33 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnLeftClick()
     {
-        if (thisItemSelected)
+        if (isFull)
         {
+            if (thisItemSelected)
+            {
 
-            EquipGear();
-            
+                EquipGear();
+
+            }
+            else
+            {
+                inventoryManager.DeselectAllSlots();
+                selectedShader.SetActive(true);
+                thisItemSelected = true;
+                for (int i = 0; i < equipmentSOLibrary.equipmentSO.Length; i++)
+                {
+                    if (equipmentSOLibrary.equipmentSO[i].itemName == this.itemName)
+                        equipmentSOLibrary.equipmentSO[i].PreviewEquipment();
+                }
+
+            }
         }
         else
         {
+            GameObject.Find("StatManager").GetComponent<PlayerStats>().TurnOffPreviewStats();
             inventoryManager.DeselectAllSlots();
             selectedShader.SetActive(true);
             thisItemSelected = true;
-
         }
     }
     private void EquipGear()
