@@ -9,32 +9,38 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isAttacking = false;
     public float attackRange = 2f;
-   
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        animator.SetBool("IsWalking", true);
+
     }
 
     void Update()
     {
+
+
         // Input
         moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         // Determine the primary movement direction
-        if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput))
+        if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput)&& !isAttacking)
         {
-            // Moving horizontally
+            animator.SetTrigger("IsWalking");
             moveInput = new Vector2(horizontalInput, 0f);
+
+
         }
-        else
+
+        if (Mathf.Abs(horizontalInput) < Mathf.Abs(verticalInput) && !isAttacking)
         {
-            // Moving vertically
+            animator.SetTrigger("IsWalking");
             moveInput = new Vector2(0f, verticalInput);
+
         }
 
         // Update Animator parameters
@@ -43,20 +49,25 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Speed", moveInput.sqrMagnitude);
 
         // Check for an attack input
-        if (Input.GetMouseButton(0) && !isAttacking)
+        if (Input.GetMouseButtonDown(0))
         {
-            animator.SetBool("IsWalking", false);
+
             StartCoroutine(AttackAnimation());
         }
+
+   
+
     }
 
     IEnumerator AttackAnimation()
     {
-        speed = 0;
+        animator.ResetTrigger("IsWalking");
         isAttacking = true;
+        speed = 0;
+
 
         // Stop walking animation
-        animator.SetBool("IsWalking", false);
+
 
         Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
@@ -96,39 +107,42 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        // Add delay based on your attack animation duration
-        yield return new WaitForSeconds(0.4f); // Adjust this value based on your animation length
+        yield return new WaitForSeconds(0.4f);
 
         animator.ResetTrigger("AttackDown");
         animator.ResetTrigger("AttackUp");
         animator.ResetTrigger("AttackRight");
         animator.ResetTrigger("AttackLeft");
-        animator.SetBool("IsWalking", true);
+        animator.SetTrigger("IsWalking");
         isAttacking = false;
         speed = 5;
-   
+        
+
+
+
+
+
     }
 
     void InflictDamage(IDamagable target)
     {
         target.TakeDamage(10);
-      
+
 
 
 
     }
 
- 
+
     bool IsInDistance(Vector2 TargetLocation)
     {
         float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
         return distance <= attackRange;
     }
-  
 
 
-        void FixedUpdate()
+
+    void FixedUpdate()
     {
         // Movement
         Vector2 moveVelocity = moveInput.normalized * speed;
