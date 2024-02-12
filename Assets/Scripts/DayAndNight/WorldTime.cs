@@ -20,7 +20,8 @@ namespace WorldTime
 
         private void Start()
         {
-           StartCoroutine(AddMinute());
+            _currentTime = TimeSpan.FromMinutes(350);
+            StartCoroutine(AddMinute());
             StartCoroutine(AddDay());
         }
 
