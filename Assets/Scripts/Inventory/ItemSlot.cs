@@ -51,7 +51,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             return quantity;
         //Update ITEM TYPE
         this.itemType = itemType;
-
+        
         // Update NAME
         this.itemName = itemName;
 
@@ -175,5 +175,25 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         else
             return;
     }
-    
+
+    public void UpdateUI()
+    {
+        // Update quantity text
+        quantityText.text = quantity.ToString();
+
+        // Update item image
+        itemImage.sprite = itemSprite;
+
+        // Update item description image
+        itemDescriptionImage.sprite = itemSprite; // or whatever you need to set here
+
+        // Update item description name text
+        ItemDescriptionNameText.text = itemName;
+
+        // Update item description text
+        ItemDescriptionText.text = itemDescription;
+        Image itemImageChild = transform.Find("ItemImage").GetComponent<Image>();
+        itemImageChild.sprite = itemSprite;
+
+    }
 }
