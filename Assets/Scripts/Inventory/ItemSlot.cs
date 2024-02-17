@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using static UnityEngine.Rendering.DebugUI;
+
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
     //=====ITEM DATA=====
@@ -24,7 +26,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     //=====ITEM SLOT=====
    [SerializeField]
-    private Image itemImage;
+    public Image itemImage;
 
     public Image itemDescriptionImage;
     public TMP_Text ItemDescriptionNameText;
@@ -42,6 +44,13 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
 
+    }
+    public void Update()
+    {
+        if (quantity <= 0)
+        {
+
+        }
     }
 
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string itemDescription, ItemType itemType)
@@ -126,16 +135,28 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     private void EmptySlot()
     {
-        itemName="";
-        quantityText.text = 0.ToString();
+        itemName = "";
+        quantityText.text = "0";
         quantityText.enabled = false;
-        itemImage.sprite = emptySprite;
         itemSprite = emptySprite;
-        this.itemDescription = "";
+        itemImage.sprite = emptySprite;
+        itemDescription = "";
         ItemDescriptionNameText.text = "";
         ItemDescriptionText.text = "";
-        itemDescriptionImage.sprite = emptySprite;
+
+        // Find the Panel GameObject
+        Transform panelTransform = transform.Find("Panel");
+        if (panelTransform != null)
+        {
+            // Find the Image component of the Panel GameObject and set its sprite to the empty sprite
+            Image imageChild = panelTransform.GetComponentInChildren<Image>();
+            if (imageChild != null)
+            {
+                imageChild.sprite = emptySprite;
+            }
+        }
     }
+
 
     public void OnRightClick()
     {
@@ -179,19 +200,18 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void UpdateUI()
     {
         // Update quantity text
-        quantityText.text = quantity.ToString();
-
+        this.quantityText.text = quantity.ToString();
         // Update item image
-        itemImage.sprite = itemSprite;
+        this.itemImage.sprite = itemSprite;
 
         // Update item description image
-        itemDescriptionImage.sprite = itemSprite; // or whatever you need to set here
+        this.itemDescriptionImage.sprite = itemSprite; // or whatever you need to set here
 
         // Update item description name text
-        ItemDescriptionNameText.text = itemName;
+        this.ItemDescriptionNameText.text = itemName;
 
         // Update item description text
-        ItemDescriptionText.text = itemDescription;
+        this.ItemDescriptionText.text = itemDescription;
         Image itemImageChild = transform.Find("ItemImage").GetComponent<Image>();
         itemImageChild.sprite = itemSprite;
 

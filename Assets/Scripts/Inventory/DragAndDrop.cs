@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,7 +15,30 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField]
     private Sprite empty;
 
+    public string itemName;
+    public int quantity;
+    public Sprite itemSprite;
+    public bool isFull;
+    public string itemDescription;
+    public Sprite emptySprite;
+    public ItemType itemType;
+
+    [SerializeField]
+    private TMP_Text quantityText;
+
+    [SerializeField]
+    public int maxNumberOfItems;
+
+    //=====ITEM SLOT=====
+    [SerializeField]
+    private Image itemImage;
+    [SerializeField]
    
+
+    public Image itemDescriptionImage;
+    public TMP_Text ItemDescriptionNameText;
+    public TMP_Text ItemDescriptionText;
+
 
     private CanvasGroup canvasGroup;
     [HideInInspector] public Transform parentAfterDrag;
@@ -29,43 +53,53 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         dparentBeforeDrag = parentBeforeDrag.transform.parent;
         canvasGroup = GetComponent<CanvasGroup>();
     }
+
+
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        parentAfterDrag = transform.parent;
-        transform.SetParent(transform.root);
-        transform.SetAsLastSibling();
-        canvasGroup.alpha = .6f;
-        image.raycastTarget = false;
+        if (image.sprite != empty)
+        {
+            parentAfterDrag = transform.parent;
+            transform.SetParent(transform.root);
+            transform.SetAsLastSibling();
+            canvasGroup.alpha = .6f;
+            image.raycastTarget = false;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
+        if (image.sprite != empty)
+            transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha = 1f;
-        transform.SetParent(parentAfterDrag);
-        dparentAfterDrag = parentAfterDrag.transform.parent;
-        image.raycastTarget = true;
-        if (parentBeforeDrag != parentAfterDrag)
+        if (image.sprite != empty)
         {
-            SlotUpdate();
-            emptyImage = new GameObject("empty");
-            emptyImage.transform.SetParent(parentBeforeDrag);
-            emptyImage.AddComponent<Image>().sprite = empty;
-            // Set empty sprite
-            emptyImage.AddComponent<CanvasGroup>();
-            DragAndDrop dragAndDrop = emptyImage.AddComponent<DragAndDrop>();
-            dragAndDrop.canvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();
-            emptyImage.transform.SetAsLastSibling();
+            canvasGroup.alpha = 1f;
+            transform.SetParent(parentAfterDrag);
+            dparentAfterDrag = parentAfterDrag.transform.parent;
+            image.raycastTarget = true;
+            if (parentBeforeDrag != parentAfterDrag)
+            {
+                SlotUpdate();
+                emptyImage = new GameObject("empty");
+                emptyImage.transform.SetParent(parentBeforeDrag);
+                emptyImage.AddComponent<Image>().sprite = empty;
+                // Set empty sprite
+                emptyImage.AddComponent<CanvasGroup>();
+                DragAndDrop dragAndDrop = emptyImage.AddComponent<DragAndDrop>();
+                dragAndDrop.canvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();
+                emptyImage.transform.SetAsLastSibling();
+                
+                parentBeforeDrag = parentAfterDrag;
 
-            parentBeforeDrag = parentAfterDrag;
 
-
+            }
         }
-
 
     }
     public void SlotUpdate()
@@ -99,18 +133,44 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         itemSlotBeforeDrag.itemDescription = itemSlotAfterDrag.itemDescription;
         itemSlotAfterDrag.itemDescription = tempItemDescription;
 
-        // Swap empty sprite
-        Sprite tempEmptySprite = itemSlotBeforeDrag.emptySprite;
-        itemSlotBeforeDrag.emptySprite = itemSlotAfterDrag.emptySprite;
-        itemSlotAfterDrag.emptySprite = tempEmptySprite;
 
         // Swap item type
         ItemType tempItemType = itemSlotBeforeDrag.itemType;
         itemSlotBeforeDrag.itemType = itemSlotAfterDrag.itemType;
         itemSlotAfterDrag.itemType = tempItemType;
 
-        itemSlotBeforeDrag.UpdateUI();
-        itemSlotAfterDrag.UpdateUI();
+       // Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
+       // itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
+       // itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
 
+
+
+
+        Transform quantityTextAfterDrag = dparentAfterDrag.Find("QuantityText");
+        if (quantityTextAfterDrag != null)
+        {
+            TMP_Text quantityText = quantityTextAfterDrag.GetComponent<TMP_Text>();
+            if (quantityText != null)
+            {
+               
+                quantityText.text = itemSlotAfterDrag.quantity.ToString();
+                quantityText.enabled = true;
+            }
+        }
+        Transform quantityTextBeforeDrag = dparentBeforeDrag.transform.Find("QuantityText");
+        if (quantityTextBeforeDrag != null)
+        {
+            TMP_Text quantityText = quantityTextBeforeDrag.GetComponent<TMP_Text>();
+            if (quantityText != null)
+            {
+                quantityText.text = itemSlotBeforeDrag.quantity.ToString();
+                quantityText.enabled = false;
+            }
+        }
     }
+
+
+
+
+ 
 }

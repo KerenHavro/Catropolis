@@ -12,6 +12,9 @@ public class SlotOnDrop : MonoBehaviour, IDropHandler
     {
         itemSlot = GameObject.Find("ItemSlot").GetComponent<ItemSlot>();
     }
+
+    
+
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount == 0)
@@ -38,5 +41,6 @@ public class SlotOnDrop : MonoBehaviour, IDropHandler
             }
         }
     }
+
 
 }
