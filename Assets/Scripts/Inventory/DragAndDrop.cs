@@ -33,7 +33,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField]
     private Image itemImage;
     [SerializeField]
-   
+
 
     public Image itemDescriptionImage;
     public TMP_Text ItemDescriptionNameText;
@@ -94,7 +94,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 DragAndDrop dragAndDrop = emptyImage.AddComponent<DragAndDrop>();
                 dragAndDrop.canvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();
                 emptyImage.transform.SetAsLastSibling();
-                
+
                 parentBeforeDrag = parentAfterDrag;
 
 
@@ -120,8 +120,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         // Swap item sprite
         Sprite tempItemSprite = itemSlotBeforeDrag.itemSprite;
-        itemSlotBeforeDrag.itemSprite = itemSlotAfterDrag.itemSprite;
-        itemSlotAfterDrag.itemSprite = tempItemSprite;
+        //itemSlotBeforeDrag.itemSprite = itemSlotAfterDrag.itemSprite;
+        //itemSlotAfterDrag.itemSprite = tempItemSprite;
+
 
         // Swap isFull
         bool tempIsFull = itemSlotBeforeDrag.isFull;
@@ -139,20 +140,21 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         itemSlotBeforeDrag.itemType = itemSlotAfterDrag.itemType;
         itemSlotAfterDrag.itemType = tempItemType;
 
-       // Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
-       // itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
-       // itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
+        // Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
+        // itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
+        // itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
+        
 
 
 
 
-        Transform quantityTextAfterDrag = dparentAfterDrag.Find("QuantityText");
+   Transform quantityTextAfterDrag = dparentAfterDrag.Find("QuantityText");
         if (quantityTextAfterDrag != null)
         {
             TMP_Text quantityText = quantityTextAfterDrag.GetComponent<TMP_Text>();
             if (quantityText != null)
             {
-               
+                
                 quantityText.text = itemSlotAfterDrag.quantity.ToString();
                 quantityText.enabled = true;
             }
@@ -170,7 +172,4 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
 
 
-
-
- 
 }

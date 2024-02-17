@@ -218,6 +218,7 @@ MonoBehaviour:
   itemDescriptionImage: {fileID: 0}
   ItemDescriptionNameText: {fileID: 0}
   ItemDescriptionText: {fileID: 0}
+  dragAndDrop: {fileID: 0}
   selectedShader: {fileID: 9107489580096137448}
   thisItemSelected: 0
 --- !u!1 &2954604094101931845

@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
-using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
@@ -32,7 +28,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public TMP_Text ItemDescriptionNameText;
     public TMP_Text ItemDescriptionText;
 
-
+    public DragAndDrop dragAndDrop;
 
     [SerializeField]
     public GameObject selectedShader;
@@ -144,6 +140,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         ItemDescriptionNameText.text = "";
         ItemDescriptionText.text = "";
 
+        
         // Find the Panel GameObject
         Transform panelTransform = transform.Find("Panel");
         if (panelTransform != null)
@@ -215,5 +212,34 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         Image itemImageChild = transform.Find("ItemImage").GetComponent<Image>();
         itemImageChild.sprite = itemSprite;
 
+        Transform childTransform = this.gameObject.transform.Find("Panel");
+        if (childTransform != null)
+        {
+            Transform childchildTransform = childTransform.Find("Image");
+            if (childchildTransform != null)
+            {
+                this.itemImage = childchildTransform.GetComponent<UnityEngine.UI.Image>();
+                if (this.itemImage != null)
+                {
+                    // You've found the "Image" child under the "Panel" and got its Image component
+                }
+                else
+                {
+                    Debug.LogError("Image component not found on Image child under Panel.");
+                }
+            }
+            else
+            {
+                Debug.LogError("Image child not found under Panel.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Panel not found.");
+        }
+
+
     }
 }
+
+
