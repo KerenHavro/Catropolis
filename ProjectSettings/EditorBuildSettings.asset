@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NPCHouse.unity
     guid: fa35b8da25a0f894fa4fa0e99b14ee15
+  - enabled: 1
+    path: Assets/Scenes/Forest.unity
+    guid: 143a3303011c63e4a8be397b012ff4fb
   m_configObjects: {}
