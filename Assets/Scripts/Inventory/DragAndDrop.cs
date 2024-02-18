@@ -120,8 +120,8 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         // Swap item sprite
         Sprite tempItemSprite = itemSlotBeforeDrag.itemSprite;
-        //itemSlotBeforeDrag.itemSprite = itemSlotAfterDrag.itemSprite;
-        //itemSlotAfterDrag.itemSprite = tempItemSprite;
+        itemSlotBeforeDrag.itemSprite = itemSlotAfterDrag.itemSprite;
+        itemSlotAfterDrag.itemSprite = tempItemSprite;
 
 
         // Swap isFull
@@ -140,9 +140,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         itemSlotBeforeDrag.itemType = itemSlotAfterDrag.itemType;
         itemSlotAfterDrag.itemType = tempItemType;
 
-        // Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
-        // itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
-        // itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
+         Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
+         itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
+         itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
         
 
 
