@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: RockObject
   m_EditorClassIdentifier: 
   itemName: Rock
-  collectibleItemPrefab: {fileID: 8036435896949269126, guid: d131db5c9f521804f9cb62326cfa86fe, type: 3}
-  dropChance: 100
+  collectibleItems:
+  - collectibleItemPrefab: {fileID: 8036435896949269126, guid: d131db5c9f521804f9cb62326cfa86fe, type: 3}
+    dropChance: 100
+  - collectibleItemPrefab: {fileID: 8036435896949269126, guid: d131db5c9f521804f9cb62326cfa86fe, type: 3}
+    dropChance: 100
+  - collectibleItemPrefab: {fileID: 8036435896949269126, guid: d131db5c9f521804f9cb62326cfa86fe, type: 3}
+    dropChance: 100
   maxHealth: 3

@@ -18,16 +18,23 @@ public class MineableObject : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            DropItem();
+            DropItems();
         }
         // Optionally, you can play mining animation or sound here
     }
 
-    // Method to drop collectible item
-    void DropItem()
+    // Method to drop collectible items
+    void DropItems()
     {
-        Instantiate(mineableItem.collectibleItemPrefab, transform.position, Quaternion.identity);
-        // Optionally, you can add particle effects or other effects here
+        foreach (var itemDrop in mineableItem.collectibleItems)
+        {
+            if (Random.value <= itemDrop.dropChance)
+            {
+                Instantiate(itemDrop.collectibleItemPrefab, transform.position, Quaternion.identity);
+                // Optionally, you can add particle effects or other effects here
+            }
+        }
+
         Destroy(gameObject); // Destroy the mineable object after it's mined
     }
 }
