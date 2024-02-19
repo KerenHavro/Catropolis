@@ -25,6 +25,7 @@ public class Slime : MonoBehaviour, IDamagable
     private Vector2 initialPosition;
     private Vector2 patrolDestination;
 
+    private IDamagable currentPlayer; 
     void Start()
     {
         initialPosition = transform.position; // Set initial position
@@ -96,6 +97,7 @@ public class Slime : MonoBehaviour, IDamagable
         // Example: Deal damage to the player
         Debug.Log("Attacking player!");
 
+
         // Check if the player is out of attack range
         if (Vector2.Distance(transform.position, player.position) > attackRange)
         {
@@ -162,6 +164,43 @@ public class Slime : MonoBehaviour, IDamagable
         animator.SetBool("Hit", false);
         currentState = ChaseState;
     }
-    
 
+    public void InflictDamage(IDamagable Player)
+    {
+        // Assuming target is also IDamagable
+        if (Player != null)
+        {
+            Player.TakeDamage(10); // Inflict 10 damage
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            currentPlayer = collision.gameObject.GetComponent<IDamagable>();
+            if (currentPlayer != null)
+            {
+                StartCoroutine(DealDamageRepeatedly(currentPlayer));
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            StopCoroutine(DealDamageRepeatedly(currentPlayer));
+            currentPlayer = null;
+        }
+    }
+
+    IEnumerator DealDamageRepeatedly(IDamagable player)
+    {
+        while (currentPlayer != null)
+        {
+            InflictDamage(player); // Deal damage to the player
+            yield return new WaitForSeconds(1f); // Wait for 1 second before dealing damage again
+        }
+    }
 }

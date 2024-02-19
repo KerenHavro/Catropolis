@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.CompareTag("Enemy") && IsInDistance(hit.collider.transform.position))
             {
+
                 IDamagable target = hit.collider.GetComponent<IDamagable>();
                 print("hya!");
                 if (target != null)
