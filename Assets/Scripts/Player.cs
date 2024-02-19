@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour, IDamagable
 {
-    
+    public HealthBar healthBar;
     public int maxHealth = 100;
     [SerializeField]
     public int currentHealth;
@@ -18,12 +18,14 @@ public class Player : MonoBehaviour, IDamagable
     void Start()
     {
         currentHealth = maxHealth;
-  
+        healthBar.SetMaxHealth(maxHealth);
+
     }
 
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
+        healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0)
         {
             Die();
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour, IDamagable
     public void Heal(int healAmount)
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + healAmount);
+        healthBar.SetHealth(currentHealth);
     }
 
     public void Die()
