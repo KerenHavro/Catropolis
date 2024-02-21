@@ -58,6 +58,15 @@ public class PlayerController : MonoBehaviour
    
 
     }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("NPC"))
+        {
+            if (Input.GetKey(KeyCode.Q))
+                other.gameObject.GetComponent<NPCController>().ActivateDialogue();
+        }
+    }
+
 
     IEnumerator AttackAnimation()
     {
