@@ -11,21 +11,36 @@ public class PlayerController : MonoBehaviour
     public float attackRange = 2f;
     private NPCController npc;
 
-    public
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
     }
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
+            if (hit.collider != null && hit.collider.CompareTag("NPC"))
+            {
+                npc = hit.collider.gameObject.GetComponent<NPCController>(); // Assign to class-level variable
+                if (npc != null)
+                {
+                    animator.SetFloat("Speed", 0);
+                    npc.ActivateDialogue();
+                    // Set isAttacking to false to ensure the player stops attacking when initiating dialogue
+                    isAttacking = false;
+                }
+            }
+            else
+                StartCoroutine(AttackAnimation());
+        }
+
+        // Check if the player is in dialogue
         if (!InDialogue())
         {
-
             // Input
             moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             float horizontalInput = Input.GetAxis("Horizontal");
@@ -36,50 +51,24 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetTrigger("IsWalking");
                 moveInput = new Vector2(horizontalInput, 0f);
-
-
             }
 
             if (Mathf.Abs(horizontalInput) < Mathf.Abs(verticalInput) && !isAttacking)
             {
                 animator.SetTrigger("IsWalking");
                 moveInput = new Vector2(0f, verticalInput);
-
             }
 
             // Update Animator parameters
             animator.SetFloat("Horizontal", moveInput.x);
             animator.SetFloat("Vertical", moveInput.y);
             animator.SetFloat("Speed", moveInput.sqrMagnitude);
-
-            // Check for an attack input
-            if (Input.GetMouseButtonDown(0))
-            {
-
-                StartCoroutine(AttackAnimation());
-            }
-
         }
-
-    }
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("NPC"))
+        else
         {
-
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                npc = other.gameObject.GetComponent<NPCController>();
-                other.gameObject.GetComponent<NPCController>().ActivateDialogue();
-
-            }
-
+            // If in dialogue, stop walking
+            animator.SetBool("IsWalking", false);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        npc = null;
     }
 
     private bool InDialogue()
@@ -89,15 +78,14 @@ public class PlayerController : MonoBehaviour
         else
             return false;
     }
+
     IEnumerator AttackAnimation()
     {
         animator.ResetTrigger("IsWalking");
         isAttacking = true;
         speed = 0;
 
-
         // Stop walking animation
-
 
         Vector2 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
@@ -117,20 +105,17 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.CompareTag("Enemy") && IsInDistance(hit.collider.transform.position))
             {
-
                 IDamagable target = hit.collider.GetComponent<IDamagable>();
                 print("hya!");
                 if (target != null)
                 {
                     InflictDamage(target);
-
                     // Pass the target variable to the InflictDamage method
                 }
             }
             if (hit.collider.CompareTag("Object") && IsInDistance(hit.collider.transform.position))
             {
                 MineableObject mineableObject = hit.collider.GetComponent<MineableObject>();
-
                 if (mineableObject != null)
                 {
                     // Mine the object
@@ -147,31 +132,18 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("IsWalking");
         isAttacking = false;
         speed = 5;
-
-
-
-
-
-
     }
 
     void InflictDamage(IDamagable target)
     {
         target.TakeDamage(10);
-
-
-
-
     }
-
 
     bool IsInDistance(Vector2 TargetLocation)
     {
         float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
         return distance <= attackRange;
     }
-
-
 
     void FixedUpdate()
     {
