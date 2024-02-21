@@ -5,7 +5,9 @@ namespace DialogueSystem
 {
     public class DialogueHolder : MonoBehaviour
     {
-        private void Awake()
+
+        
+        private void Start()
         {
             StartCoroutine(DialogueSequence());
         }

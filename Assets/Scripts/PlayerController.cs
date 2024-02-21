@@ -11,13 +11,13 @@ public class PlayerController : MonoBehaviour
     public float attackRange = 2f;
     private NPCController npc;
 
-    public 
+    public
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
+
     }
 
     void Update()
@@ -69,9 +69,9 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                npc= other.gameObject.GetComponent<NPCController>();
+                npc = other.gameObject.GetComponent<NPCController>();
                 other.gameObject.GetComponent<NPCController>().ActivateDialogue();
-             
+
             }
 
         }
