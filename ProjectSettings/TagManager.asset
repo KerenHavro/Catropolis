@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Object
   - Tree
+  - NPC
   layers:
   - Default
   - TransparentFX
