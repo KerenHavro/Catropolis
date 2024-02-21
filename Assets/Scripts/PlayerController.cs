@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("NPC"))
         {
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 npc = other.gameObject.GetComponent<NPCController>();
                 other.gameObject.GetComponent<NPCController>().ActivateDialogue();
