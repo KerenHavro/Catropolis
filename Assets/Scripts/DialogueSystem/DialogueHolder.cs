@@ -20,10 +20,9 @@ namespace DialogueSystem
 
                 DialogueLine dialogueLine = currentChild.GetComponent<DialogueLine>();
                 
-                if (dialogueLine != null)
-                {
+            
                     yield return new WaitUntil(() => dialogueLine.finished);
-                }
+                
                 yield return new WaitUntil(() => Input.GetMouseButton(0));
             }
             
