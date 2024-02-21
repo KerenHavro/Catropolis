@@ -71,7 +71,9 @@ public class PlayerController : MonoBehaviour
         else
         {
             // If in dialogue, stop walking
-            animator.SetBool("IsWalking", false);
+            animator.SetFloat("Speed", 0);
+            speed = 0;
+            animator.SetBool("IsWalking", true);
         }
     }
 
