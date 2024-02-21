@@ -32,11 +32,11 @@ public class PlayerController : MonoBehaviour
                     speed = 0;
                     npc.ActivateDialogue();
                     // Set isAttacking to false to ensure the player stops attacking when initiating dialogue
-                    isAttacking = false;
+                    
                 }
             }
             else
-                if (npc == null)
+                
                 StartCoroutine(AttackAnimation());
             
         }
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         // Check if the player is in dialogue
         if (!InDialogue())
         {
-            speed = 5;
+            
             // Input
             moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             float horizontalInput = Input.GetAxis("Horizontal");
