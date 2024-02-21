@@ -9,65 +9,86 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool isAttacking = false;
     public float attackRange = 2f;
+    private NPCController npc;
 
+    public 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        
     }
 
     void Update()
     {
 
-
-        // Input
-        moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        // Determine the primary movement direction
-        if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput)&& !isAttacking)
-        {
-            animator.SetTrigger("IsWalking");
-            moveInput = new Vector2(horizontalInput, 0f);
-
-
-        }
-
-        if (Mathf.Abs(horizontalInput) < Mathf.Abs(verticalInput) && !isAttacking)
-        {
-            animator.SetTrigger("IsWalking");
-            moveInput = new Vector2(0f, verticalInput);
-
-        }
-
-        // Update Animator parameters
-        animator.SetFloat("Horizontal", moveInput.x);
-        animator.SetFloat("Vertical", moveInput.y);
-        animator.SetFloat("Speed", moveInput.sqrMagnitude);
-
-        // Check for an attack input
-        if (Input.GetMouseButtonDown(0))
+        if (!InDialogue())
         {
 
-            StartCoroutine(AttackAnimation());
-        }
+            // Input
+            moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
 
-   
+            // Determine the primary movement direction
+            if (Mathf.Abs(horizontalInput) > Mathf.Abs(verticalInput) && !isAttacking)
+            {
+                animator.SetTrigger("IsWalking");
+                moveInput = new Vector2(horizontalInput, 0f);
+
+
+            }
+
+            if (Mathf.Abs(horizontalInput) < Mathf.Abs(verticalInput) && !isAttacking)
+            {
+                animator.SetTrigger("IsWalking");
+                moveInput = new Vector2(0f, verticalInput);
+
+            }
+
+            // Update Animator parameters
+            animator.SetFloat("Horizontal", moveInput.x);
+            animator.SetFloat("Vertical", moveInput.y);
+            animator.SetFloat("Speed", moveInput.sqrMagnitude);
+
+            // Check for an attack input
+            if (Input.GetMouseButtonDown(0))
+            {
+
+                StartCoroutine(AttackAnimation());
+            }
+
+        }
 
     }
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("NPC"))
         {
-            if (Input.GetKey(KeyCode.Q))
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                npc= other.gameObject.GetComponent<NPCController>();
                 other.gameObject.GetComponent<NPCController>().ActivateDialogue();
+             
+            }
+
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        npc = null;
+    }
 
+    private bool InDialogue()
+    {
+        if (npc != null)
+            return npc.DialogueActive();
+        else
+            return false;
+    }
     IEnumerator AttackAnimation()
     {
         animator.ResetTrigger("IsWalking");
@@ -126,7 +147,7 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("IsWalking");
         isAttacking = false;
         speed = 5;
-        
+
 
 
 
