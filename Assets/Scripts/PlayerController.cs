@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
             else
+                if (npc == null)
                 StartCoroutine(AttackAnimation());
         }
 

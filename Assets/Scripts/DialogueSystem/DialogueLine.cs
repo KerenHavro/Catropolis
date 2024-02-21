@@ -28,6 +28,8 @@ namespace DialogueSystem
         [SerializeField]
         private Image imageHolder;
 
+        private IEnumerator lineAppear;
+
         private void Awake()
         {
             //textHolder.text = "";
@@ -38,7 +40,22 @@ namespace DialogueSystem
 
         private void Start()
         {
-            StartCoroutine(WriteText(input, textHolder, delay, textColor, sound, delayBetweenLines));
+            lineAppear = WriteText(input, textHolder, delay, textColor, sound, delayBetweenLines);
+            StartCoroutine(lineAppear);
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (textHolder.text != input)
+                {
+                    StopCoroutine(lineAppear);
+                    textHolder.text = input;
+                }
+                else
+                    finished = true;
+            }
         }
     }
 }
