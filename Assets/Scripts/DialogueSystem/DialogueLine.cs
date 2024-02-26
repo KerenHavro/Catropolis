@@ -33,13 +33,14 @@ namespace DialogueSystem
         private void Awake()
         {
             //textHolder.text = "";
-            textHolder = GetComponent<TMP_Text>();
+             
             imageHolder.sprite = charSprite;
             imageHolder.preserveAspect = true;
         }
 
-        private void Start()
+        private void OnEnable()
         {
+            ResetLine();
             lineAppear = WriteText(input, textHolder, delay, textColor, sound, delayBetweenLines);
             StartCoroutine(lineAppear);
         }
@@ -56,6 +57,13 @@ namespace DialogueSystem
                 else
                     finished = true;
             }
+        }
+
+        private void ResetLine()
+        {
+            textHolder = GetComponent<TMP_Text>();
+            textHolder.text = "";
+            finished = false;
         }
     }
 }
