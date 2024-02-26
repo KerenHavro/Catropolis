@@ -16,7 +16,7 @@ public class ChangeScene : MonoBehaviour
             // If loadAsync is false, load the scene synchronously
             if (!loadAsync)
             {
-                SceneManager.LoadScene(NPCHouse);
+                SceneManager.LoadSceneAsync(NPCHouse);
             }
             // If loadAsync is true, load the scene asynchronously
             else

@@ -1,15 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DialogueSystem
 {
     public class DialogueHolder : MonoBehaviour
     {
-
+        public Button button1;
+        public Button button2;
         private IEnumerator dialogueSeq;
         private bool dialogueFinished;
+       
         private void OnEnable()
         {
+            
             dialogueSeq = DialogueSequence();
             StartCoroutine(dialogueSeq);
         }
@@ -55,10 +59,13 @@ namespace DialogueSystem
                 yield return new WaitUntil(() => dialogueLine.finished);
 
                 yield return new WaitUntil(() => Input.GetMouseButton(0));
+                button1.gameObject.SetActive(true);
+                button2.gameObject.SetActive(true);
 
             }
             dialogueFinished = true;
             gameObject.SetActive(false);
+            
             
 
         }
