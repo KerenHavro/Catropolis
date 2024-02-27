@@ -21,7 +21,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public int maxNumberOfItems;
 
     //=====ITEM SLOT=====
-   [SerializeField]
+    [SerializeField]
     public Image itemImage;
 
     public Image itemDescriptionImage;
@@ -43,6 +43,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     }
     public void Update()
     {
+
         if (quantity <= 0)
         {
 
@@ -56,7 +57,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             return quantity;
         //Update ITEM TYPE
         this.itemType = itemType;
-        
+
         // Update NAME
         this.itemName = itemName;
 
@@ -76,7 +77,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             isFull = true;
 
             //return the LEFTOVERS
-            
+
             int extraItems = this.quantity - maxNumberOfItems;
             this.quantity = maxNumberOfItems;
             return extraItems;
@@ -105,7 +106,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     {
         if (thisItemSelected)
         {
-           bool usable= inventoryManager.UseItem(itemName);
+            bool usable = inventoryManager.UseItem(itemName);
             if (usable)
             {
                 this.quantity -= 1;
@@ -140,106 +141,126 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         ItemDescriptionNameText.text = "";
         ItemDescriptionText.text = "";
 
-        
+
         // Find the Panel GameObject
-        Transform panelTransform = transform.Find("Panel");
-        if (panelTransform != null)
-        {
-            // Find the Image component of the Panel GameObject and set its sprite to the empty sprite
-            Image imageChild = panelTransform.GetComponentInChildren<Image>();
-            if (imageChild != null)
-            {
-                imageChild.sprite = emptySprite;
-            }
-        }
-    }
-
-
-    public void OnRightClick()
-    {
-        if (quantityText.text!= 0.ToString())
-        {
-
-            //create a ne item
-            GameObject itemToDrop = new GameObject(itemName);
-            Item newItem = itemToDrop.AddComponent<Item>();
-            itemToDrop.AddComponent<Rigidbody2D>();
-            itemToDrop.GetComponent<Rigidbody2D>().mass = 0;
-            itemToDrop.GetComponent<Rigidbody2D>().gravityScale = 0;
-            itemToDrop.GetComponent<Rigidbody2D>().angularDrag = 0;
-
-            newItem.quantity = 1;
-            newItem.itemName = itemName;
-            newItem.sprite = itemSprite;
-            newItem.itemDescription = itemDescription;
-
-            //Create and modify the SR
-            SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
-            sr.sprite = itemSprite;
-            sr.sortingOrder = 5;
-            //sr.sortingLayerName = "UI";
-
-            //Add a collider
-            itemToDrop.AddComponent<BoxCollider2D>();
-            itemToDrop.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, 2f, 0);
-
-            //sub the item
-            this.quantity -= 1;
-            quantityText.text = this.quantity.ToString();
-            if (this.quantity <= 0)
-                EmptySlot();
-
-        }
-        else
-            return;
-    }
-
-    public void UpdateUI()
-    {
-        // Update quantity text
-        this.quantityText.text = quantity.ToString();
-        // Update item image
-        this.itemImage.sprite = itemSprite;
-
-        // Update item description image
-        this.itemDescriptionImage.sprite = itemSprite; // or whatever you need to set here
-
-        // Update item description name text
-        this.ItemDescriptionNameText.text = itemName;
-
-        // Update item description text
-        this.ItemDescriptionText.text = itemDescription;
         Image itemImageChild = transform.Find("ItemImage").GetComponent<Image>();
         itemImageChild.sprite = itemSprite;
 
-        Transform childTransform = this.gameObject.transform.Find("Panel");
-        if (childTransform != null)
+        // Find the panel
+        Transform panelTransform = this.gameObject.transform.Find("Panel");
+        if (panelTransform != null)
         {
-            Transform childchildTransform = childTransform.Find("Image");
-            if (childchildTransform != null)
+            // Find the child named "Image" under the panel
+            Transform imageTransform = panelTransform.Find("Image1");
+            if (imageTransform != null)
             {
-                this.itemImage = childchildTransform.GetComponent<UnityEngine.UI.Image>();
-                if (this.itemImage != null)
+                // Get the Image component
+                Image imageComponent = imageTransform.GetComponent<Image>();
+                if (imageComponent != null)
                 {
-                    // You've found the "Image" child under the "Panel" and got its Image component
-                }
-                else
-                {
-                    Debug.LogError("Image component not found on Image child under Panel.");
+                    // Assign the image component to itemImage
+
+                   
+                    // Set the sprite of the image component to itemSprite
+                    imageComponent.sprite = emptySprite;
+
+                    Debug.Log("Image component found under Panel.");
                 }
             }
             else
             {
-                Debug.LogError("Image child not found under Panel.");
+
+                Transform imageTransform2 = panelTransform.Find("empty");
+                Image imageComponent2 = imageTransform2.GetComponent<Image>();
+                
+
+                // Set the sprite of the image component to itemSprite
+                imageComponent2.sprite = emptySprite;
             }
         }
-        else
-        {
-            Debug.LogError("Panel not found.");
-        }
-
-
     }
+
+        public void OnRightClick()
+        {
+            if (quantityText.text != 0.ToString())
+            {
+
+                //create a ne item
+                GameObject itemToDrop = new GameObject(itemName);
+                Item newItem = itemToDrop.AddComponent<Item>();
+                itemToDrop.AddComponent<Rigidbody2D>();
+                itemToDrop.GetComponent<Rigidbody2D>().mass = 0;
+                itemToDrop.GetComponent<Rigidbody2D>().gravityScale = 0;
+                itemToDrop.GetComponent<Rigidbody2D>().angularDrag = 0;
+
+                newItem.quantity = 1;
+                newItem.itemName = itemName;
+                newItem.sprite = itemSprite;
+                newItem.itemDescription = itemDescription;
+
+                //Create and modify the SR
+                SpriteRenderer sr = itemToDrop.AddComponent<SpriteRenderer>();
+                sr.sprite = itemSprite;
+                sr.sortingOrder = 5;
+                //sr.sortingLayerName = "UI";
+
+                //Add a collider
+                itemToDrop.AddComponent<BoxCollider2D>();
+                itemToDrop.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, 2f, 0);
+
+                //sub the item
+                this.quantity -= 1;
+                quantityText.text = this.quantity.ToString();
+                if (this.quantity <= 0)
+                    EmptySlot();
+
+            }
+            else
+                return;
+        }
+    
+    public void UpdateUI()
+    {
+        // Update item image child
+        Image itemImageChild = transform.Find("ItemImage").GetComponent<Image>();
+        itemImageChild.sprite = itemSprite;
+
+        // Find the panel
+        Transform panelTransform = this.gameObject.transform.Find("Panel");
+        if (panelTransform != null)
+        {
+            // Find the child named "Image" under the panel
+            Transform imageTransform = panelTransform.Find("Image1");
+            if (imageTransform != null)
+            {
+                // Get the Image component
+                Image imageComponent = imageTransform.GetComponent<Image>();
+                if (imageComponent != null)
+                {
+                    // Assign the image component to itemImage
+
+                    imageComponent = itemImage;
+                    // Set the sprite of the image component to itemSprite
+                    imageComponent.sprite = itemImage.sprite;
+                    
+                    Debug.Log("Image component found under Panel.");
+                }
+            }
+            else
+            {
+               
+                Transform imageTransform2 = panelTransform.Find("empty");
+                Image imageComponent2 = imageTransform2.GetComponent<Image>();
+                imageComponent2 = itemImage;
+
+                // Set the sprite of the image component to itemSprite
+                imageComponent2.sprite = itemImage.sprite;
+            }
+
+        }
+    }
+
 }
+
 
 
