@@ -4,12 +4,12 @@ using UnityEngine.UI;
 public class NPCController : MonoBehaviour
 {
     [SerializeField] private GameObject dialogue;
-    [SerializeField] private Button button1;
-    [SerializeField] private Button button2;
+    [SerializeField] private GameObject Board;
+
     public void Awake()
     {
-        button1.gameObject.SetActive(false);
-        button2.gameObject.SetActive(false);
+        Board.gameObject.SetActive(false);
+  
 
         dialogue.SetActive(false);
     }
