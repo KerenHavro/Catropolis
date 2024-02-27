@@ -167,7 +167,7 @@ public class Slime : MonoBehaviour, IDamagable
             IDamagable currentPlayer = collision.gameObject.GetComponent<IDamagable>();
             if (currentPlayer != null)
             {
-                StartCoroutine(DealDamageRepeatedly(currentPlayer));
+                InflictDamage(currentPlayer);
             }
         }
     }
