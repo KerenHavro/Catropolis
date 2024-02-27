@@ -109,9 +109,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         ItemSlot itemSlotAfterDrag = dparentAfterDrag.GetComponent<ItemSlot>();
 
         // Swap item name
-        string tempItemName = itemSlotBeforeDrag.itemName;
-        itemSlotBeforeDrag.itemName = itemSlotAfterDrag.itemName;
-        itemSlotAfterDrag.itemName = tempItemName;
+       // string tempItemName = itemSlotBeforeDrag.itemName;
+      //  itemSlotBeforeDrag.itemName = itemSlotAfterDrag.itemName;
+      //  itemSlotAfterDrag.itemName = tempItemName;
 
         // Swap quantity
         int tempQuantity = itemSlotBeforeDrag.quantity;
@@ -119,9 +119,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         itemSlotAfterDrag.quantity = tempQuantity;
 
         // Swap item sprite
-        Sprite tempItemSprite = itemSlotBeforeDrag.itemSprite;
-        itemSlotBeforeDrag.itemSprite = itemSlotAfterDrag.itemSprite;
-        itemSlotAfterDrag.itemSprite = tempItemSprite;
+       // Sprite tempItemSprite = itemSlotBeforeDrag.itemSprite;
+       // itemSlotBeforeDrag.itemSprite = itemSlotAfterDrag.itemSprite;
+       // itemSlotAfterDrag.itemSprite = tempItemSprite;
 
 
         // Swap isFull
@@ -140,9 +140,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         itemSlotBeforeDrag.itemType = itemSlotAfterDrag.itemType;
         itemSlotAfterDrag.itemType = tempItemType;
 
-         Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
-         itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
-         itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
+         //Sprite tempItemImageSprite = itemSlotBeforeDrag.itemImage.sprite;
+        // itemSlotBeforeDrag.itemImage.sprite = itemSlotAfterDrag.itemImage.sprite;
+        // itemSlotAfterDrag.itemImage.sprite = tempItemImageSprite;
         
 
 

@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     {
         foreach (Transform spawnLocation in spawnLocations)
         {
-            int numToSpawn = Random.Range(1, 6); // Random number between 1 and 5
+            int numToSpawn = Random.Range(1, 3); // Random number between 1 and 5
 
             for (int i = 0; i < numToSpawn; i++)
             {
@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
         List<GameObject> slimes = new List<GameObject>();
 
         // Find all slime enemies in the scene
-        GameObject[] slimeEnemies = GameObject.FindGameObjectsWithTag("SlimeEnemy");
+        GameObject[] slimeEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         slimes.AddRange(slimeEnemies);
 
         // Determine the number of slimes to kill

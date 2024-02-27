@@ -32,14 +32,15 @@ namespace DialogueSystem
 
         private void Awake()
         {
-            //textHolder.text = "";
-             
+            //textHolder.text = " ";
+
             imageHolder.sprite = charSprite;
             imageHolder.preserveAspect = true;
         }
 
         private void OnEnable()
         {
+           
             ResetLine();
             lineAppear = WriteText(input, textHolder, delay, textColor, sound, delayBetweenLines);
             StartCoroutine(lineAppear);

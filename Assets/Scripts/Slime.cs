@@ -11,10 +11,7 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
 
-
-
     public Animator animator;
-    public Transform player;
 
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
@@ -25,19 +22,34 @@ public class Slime : MonoBehaviour, IDamagable
     private Vector2 initialPosition;
     private Vector2 patrolDestination;
 
-    private IDamagable currentPlayer; 
+    private Transform playerTransform; // Reference to the player's Transform
+
     void Start()
     {
-        initialPosition = transform.position; // Set initial position
-        SetNewPatrolDestination(); // Set initial patrol destination
+        initialPosition = transform.position;
+        SetNewPatrolDestination();
         animator.SetBool("Hit", false);
         healthBar.SetMaxHealth(maxHealth);
         currentState = PatrolState;
         currentHealth = maxHealth;
+
+        // Find the player GameObject with the "Player" tag and get its Transform component
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            playerTransform = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogError("Player GameObject not found!");
+        }
     }
 
     void Update()
     {
+        if (playerTransform == null) // If player Transform is not found, return
+            return;
+
         switch (currentState)
         {
             case PatrolState:
@@ -54,20 +66,16 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Patrol()
     {
-        
         if (Vector2.Distance(transform.position, patrolDestination) > 0.1f)
         {
-            // Move the slime towards the patrol destination using linear interpolation (LERP)
             transform.position = Vector2.MoveTowards(transform.position, patrolDestination, patrolSpeed * Time.deltaTime);
         }
-        // Check if the distance between the slime and the patrol destination is small enough
         if (Vector2.Distance(transform.position, patrolDestination) < 0.1f)
         {
             SetNewPatrolDestination();
         }
 
-        // Check if the player is within chase range
-        if (Vector2.Distance(transform.position, player.position) < chaseRange)
+        if (Vector2.Distance(transform.position, playerTransform.position) < chaseRange)
         {
             currentState = ChaseState;
         }
@@ -75,16 +83,13 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Chase()
     {
-        // Implement chasing behavior here
-        transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, chaseSpeed * Time.deltaTime);
 
-        // Check if the player is within attack range
-        if (Vector2.Distance(transform.position, player.position) <= attackRange)
+        if (Vector2.Distance(transform.position, playerTransform.position) <= attackRange)
         {
             currentState = AttackState;
         }
-        // Check if the player is out of chase range
-        else if (Vector2.Distance(transform.position, player.position) > chaseRange)
+        else if (Vector2.Distance(transform.position, playerTransform.position) > chaseRange)
         {
             currentState = PatrolState;
         }
@@ -92,14 +97,9 @@ public class Slime : MonoBehaviour, IDamagable
 
     void Attack()
     {
-        // Implement attacking behavior here
-
-        // Example: Deal damage to the player
         Debug.Log("Attacking player!");
 
-
-        // Check if the player is out of attack range
-        if (Vector2.Distance(transform.position, player.position) > attackRange)
+        if (Vector2.Distance(transform.position, playerTransform.position) > attackRange)
         {
             currentState = ChaseState;
         }
@@ -108,15 +108,12 @@ public class Slime : MonoBehaviour, IDamagable
     void SetNewPatrolDestination()
     {
         patrolDestination = initialPosition + Random.insideUnitCircle * 5f;
-
-        Patrol();
-
     }
 
     public void TakeDamage(int damageAmount)
     {
         animator.SetBool("Hit", true);
-        Vector2 damageSourcePosition = player.position;
+        Vector2 damageSourcePosition = playerTransform.position;
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
         ApplyKnockback(damageSourcePosition);
@@ -129,9 +126,8 @@ public class Slime : MonoBehaviour, IDamagable
 
     public void Die()
     {
-        // Handle death actions for the slime enemy
         Debug.Log("Slime enemy has been defeated!");
-        Destroy(gameObject); // Assuming you want to destroy the enemy object when it dies
+        Destroy(gameObject);
     }
 
     void ApplyKnockback(Vector2 damageSourcePosition)
@@ -141,24 +137,15 @@ public class Slime : MonoBehaviour, IDamagable
 
     IEnumerator KnockbackCoroutine(Vector2 damageSourcePosition)
     {
-        // Calculate knockback direction based on the damage source position
         Vector2 knockbackDirection = ((Vector2)transform.position - damageSourcePosition).normalized;
-
-        // Calculate the end position after knockback
         Vector2 endPosition = (Vector2)transform.position + knockbackDirection * knockbackDistance;
-
-        // Time elapsed during knockback
         float elapsedKnockbackTime = 1f;
 
-        while (elapsedKnockbackTime < 2f) // Knockback duration is 2 seconds
+        while (elapsedKnockbackTime < 2f)
         {
-            // Move towards the end position
             transform.position = Vector2.MoveTowards(transform.position, endPosition, knockbackSpeed * Time.deltaTime);
-
-            // Update elapsed time
             elapsedKnockbackTime += Time.deltaTime;
-
-            yield return null; // Wait for the next frame
+            yield return null;
         }
 
         animator.SetBool("Hit", false);
@@ -167,10 +154,9 @@ public class Slime : MonoBehaviour, IDamagable
 
     public void InflictDamage(IDamagable Player)
     {
-        // Assuming target is also IDamagable
         if (Player != null)
         {
-            Player.TakeDamage(10); // Inflict 10 damage
+            Player.TakeDamage(10);
         }
     }
 
@@ -178,7 +164,7 @@ public class Slime : MonoBehaviour, IDamagable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            currentPlayer = collision.gameObject.GetComponent<IDamagable>();
+            IDamagable currentPlayer = collision.gameObject.GetComponent<IDamagable>();
             if (currentPlayer != null)
             {
                 StartCoroutine(DealDamageRepeatedly(currentPlayer));
@@ -190,17 +176,17 @@ public class Slime : MonoBehaviour, IDamagable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            IDamagable currentPlayer = collision.gameObject.GetComponent<IDamagable>();
             StopCoroutine(DealDamageRepeatedly(currentPlayer));
-            currentPlayer = null;
         }
     }
 
     IEnumerator DealDamageRepeatedly(IDamagable player)
     {
-        while (currentPlayer != null)
+        while (true)
         {
-            InflictDamage(player); // Deal damage to the player
-            yield return new WaitForSeconds(1f); // Wait for 1 second before dealing damage again
+            InflictDamage(player);
+            yield return new WaitForSeconds(1f);
         }
     }
 }
