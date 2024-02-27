@@ -11,13 +11,10 @@ public class EnemySpawner : MonoBehaviour
     public float killPercentage = 0.8f; // Percentage of slimes to be killed
     private bool hasKilled = false;
 
-    private void Awake()
-    {
-        SpawnSlimeEnemies();
-    }
 
 
-    void SpawnSlimeEnemies()
+
+    public void SpawnSlimeEnemies()
     {
         foreach (Transform spawnLocation in spawnLocations)
         {
@@ -30,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void KillSlimes()
+    public void KillSlimes()
     {
         List<GameObject> slimes = new List<GameObject>();
 
