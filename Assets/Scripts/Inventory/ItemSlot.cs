@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -43,7 +44,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     }
     public void Update()
     {
-
+        
         if (quantity <= 0)
         {
 
@@ -218,47 +219,47 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             else
                 return;
         }
-    
+
     public void UpdateUI()
     {
-        // Update item image child
-        Image itemImageChild = transform.Find("ItemImage").GetComponent<Image>();
-        itemImageChild.sprite = itemSprite;
-
         // Find the panel
         Transform panelTransform = this.gameObject.transform.Find("Panel");
         if (panelTransform != null)
         {
-            // Find the child named "Image" under the panel
+
+
+            // Find the child named "Image1" under the panel
             Transform imageTransform = panelTransform.Find("Image1");
+
             if (imageTransform != null)
             {
-                // Get the Image component
+       
                 Image imageComponent = imageTransform.GetComponent<Image>();
-                if (imageComponent != null)
-                {
-                    // Assign the image component to itemImage
+                this.itemImage.sprite = imageComponent.sprite;
 
-                    imageComponent = itemImage;
-                    // Set the sprite of the image component to itemSprite
-                    imageComponent.sprite = itemImage.sprite;
-                    
-                    Debug.Log("Image component found under Panel.");
-                }
             }
-            else
-            {
-               
-                Transform imageTransform2 = panelTransform.Find("empty");
-                Image imageComponent2 = imageTransform2.GetComponent<Image>();
-                imageComponent2 = itemImage;
+         
 
-                // Set the sprite of the image component to itemSprite
-                imageComponent2.sprite = itemImage.sprite;
+       
+            Transform emptyTransform = panelTransform.Find("empty");
+            if (emptyTransform != null)
+            {
+                Image emptyImageComponent = emptyTransform.GetComponent<Image>();
+          
+                this.itemImage.sprite = emptyImageComponent.sprite;
+
             }
 
         }
+
+
+
+        else
+        {
+            Debug.Log("Panel not found.");
+        }
     }
+
 
 }
 
