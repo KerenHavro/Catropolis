@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -86,7 +87,7 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             image.raycastTarget = true;
             if (parentBeforeDrag != parentAfterDrag)
             {
-                //SlotUpdate();
+                SlotUpdate();
 
                 emptyImage = new GameObject("empty");
                 emptyImage.transform.SetParent(parentBeforeDrag);
@@ -102,8 +103,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 ItemSlot itemSlotBeforeDrag = dparentBeforeDrag.GetComponent<ItemSlot>();
                 ItemSlot itemSlotAfterDrag = dparentAfterDrag.GetComponent<ItemSlot>();
 
+                itemSlotBeforeDrag.UpdateUI();
+                itemSlotAfterDrag.UpdateUI();
 
-          
             }
         }
 
@@ -173,10 +175,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         itemSlotBeforeDrag.itemType = itemSlotAfterDrag.itemType;
         itemSlotAfterDrag.itemType = tempItemType;
 
-        //itemSlotBeforeDrag.UpdateUI();
-        //itemSlotAfterDrag.UpdateUI();
 
 
+ 
 
 
     }
