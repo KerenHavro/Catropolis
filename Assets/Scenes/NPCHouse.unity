@@ -58001,7 +58001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec91cefdca95b34d82b76d6e6bd8e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPCHouse: City1
+  NPCHouse: CityMain
   loadAsync: 0
 --- !u!61 &2135122362
 BoxCollider2D:

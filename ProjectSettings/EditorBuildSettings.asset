@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scripts/Scenes/City.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/City1.unity
+    path: Assets/Scenes/CityMain.unity
     guid: 492ce3e736505f248a90a92c7c128aa6
   - enabled: 1
     path: Assets/Scenes/NPCHouse.unity
