@@ -140,8 +140,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: d432404c4d634af4dbe5142cc59d2b66, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -218,8 +218,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 69e65b96f9fafae4e82441f134692915, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -248,5 +248,13 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: 19496b1ab2ce3a64bb8190ee1f2702ac, type: 3}
   itemType: 0
   itemImage: {fileID: 5307544302184180875}
+  headSlot: {fileID: 0}
+  cloakSlot: {fileID: 0}
+  bodySlot: {fileID: 0}
+  legsSlot: {fileID: 0}
+  mainHandSlot: {fileID: 0}
+  offHandSlot: {fileID: 0}
+  relicSlot: {fileID: 0}
+  feetSlot: {fileID: 0}
   selectedShader: {fileID: 4779210626830120005}
   thisItemSelected: 0
