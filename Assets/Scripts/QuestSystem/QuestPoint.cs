@@ -7,16 +7,22 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class QuestPoint : MonoBehaviour
 {
-    [HeaderAttribute("Quest")]
+    [Header("Quest")]
     [SerializeField] private QuestInfoSO questInfoForPoint;
     private bool playerIsNear = false;
 
+    [Header("Config")]
+    [SerializeField] private bool startPoint= true;
+    [SerializeField] private bool finishPoint = true;
+
+
     private string questId;
     private QuestState currentQuestState;
-
+    private QuestIcon questIcon;
     private void Awake()
     {
         questId = questInfoForPoint.id;
+        questIcon = GetComponentInChildren<QuestIcon>();
     }
     private void OnEnable()
     {
@@ -36,9 +42,16 @@ public class QuestPoint : MonoBehaviour
         {
             return;
         }
-        GameEventsManager.instance.questEvents.StartQuest(questId);
-        GameEventsManager.instance.questEvents.AdvanceQuest(questId);
-        GameEventsManager.instance.questEvents.FinishQuest(questId);
+
+        if(currentQuestState.Equals(QuestState.CAN_START)&& startPoint)
+        {
+            GameEventsManager.instance.questEvents.StartQuest(questId);
+        }
+        else if (currentQuestState.Equals(QuestState.CAN_FINISH) && finishPoint)
+        {
+            GameEventsManager.instance.questEvents.FinishQuest(questId);
+        }
+  
     }
 
     private void QuestStateChange(Quest quest)
@@ -46,7 +59,7 @@ public class QuestPoint : MonoBehaviour
         if (quest.info.id.Equals(questId))
         {
             currentQuestState = quest.state;
-            Debug.Log("quest with id " + questId + " updated to state:" + currentQuestState);
+            questIcon.SetState(currentQuestState, startPoint, finishPoint);
         }
     }
 
