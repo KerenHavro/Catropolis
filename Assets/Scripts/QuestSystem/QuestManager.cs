@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
+    [Header("Config")]
+    [SerializeField] private bool loadQuestState = true;
+
     private Dictionary<string, Quest> questMap;
     private int currentPlayerLevel;
     private void Awake()
@@ -18,6 +21,8 @@ public class QuestManager : MonoBehaviour
         GameEventsManager.instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.instance.questEvents.onFinishQuest += FinishQuest;
 
+        GameEventsManager.instance.questEvents.onQuestStepStateChange += QuestStepStateChange;
+
         GameEventsManager.instance.playerEvents.onPlayerLevelChange += PlayerLevelChange;
     }
     private void OnDisable()
@@ -26,6 +31,8 @@ public class QuestManager : MonoBehaviour
         GameEventsManager.instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.instance.questEvents.onFinishQuest -= FinishQuest;
 
+        GameEventsManager.instance.questEvents.onQuestStepStateChange -= QuestStepStateChange;
+
         GameEventsManager.instance.playerEvents.onPlayerLevelChange -= PlayerLevelChange;
     }
 
@@ -33,6 +40,11 @@ public class QuestManager : MonoBehaviour
     {
         foreach (Quest quest in questMap.Values)
         {
+
+            if(quest.state== QuestState.IN_PROGRESS)
+            {
+                quest.InstantiateCurrentQuestStep(this.transform);
+            }
             GameEventsManager.instance.questEvents.QuestStateChange(quest);
         }
     }
@@ -120,20 +132,81 @@ public class QuestManager : MonoBehaviour
             {
                 Debug.LogWarning("Duplicate ID found when creating quest map:" + questInfo.id);
             }
-            idToQuestMap.Add(questInfo.id, new Quest(questInfo));
+            idToQuestMap.Add(questInfo.id, LoadQuest(questInfo));
         }
         return idToQuestMap;
     }
+
+    private void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+    {
+        Quest quest = GetQuestById(id);
+        quest.StoreQuestStepState(questStepState, stepIndex);
+        ChangeQuestState(id, quest.state);
+    }
+
+
+
     private Quest GetQuestById(string id)
     {
         Quest quest = questMap[id];
         if (quest == null)
         {
-            Debug.LogError("ID not found in the Quest Map " + id);
+            //Debug.LogError("ID not found in the Quest Map " + id);
         }
         else
         {
             Debug.Log("ID found in the Quest Map " + id);
+        }
+        return quest;
+    }
+
+    private void OnApplicationQuit()
+    {
+        foreach(Quest quest in questMap.Values)
+        {
+            SaveQuest(quest);
+        }
+        
+    }
+
+    private void SaveQuest(Quest quest)
+    {
+        try
+        {
+            QuestData questData = quest.GetQuestData();
+           
+            string serializedData = JsonUtility.ToJson(questData);
+
+            PlayerPrefs.SetString(quest.info.id, serializedData);
+             
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to save quest with id " + quest.info.id + ": " + e);
+        }
+    }
+
+    private Quest LoadQuest(QuestInfoSO questInfo)
+    {
+        Quest quest = null;
+        try
+        {
+            // load quest from saved data
+            if (PlayerPrefs.HasKey(questInfo.id)&& loadQuestState)
+            {
+                string serializedData = PlayerPrefs.GetString(questInfo.id);
+                QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
+                quest = new Quest(questInfo, questData.state, questData.questStepIndex, questData.questStepStates);
+            }
+            // otherwise, initialize a new quest
+            else
+            {
+                quest = new Quest(questInfo);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to load quest with id " + quest.info.id + ": " + e);
         }
         return quest;
     }
