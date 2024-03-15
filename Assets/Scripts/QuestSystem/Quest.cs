@@ -30,7 +30,8 @@ public class Quest : MonoBehaviour
         GameObject questStepPrefab = GetCurrenntQuestStepPrefab();
         if (questStepPrefab!= null)
         {
-            Object.Instantiate<GameObject>(questStepPrefab, parentTransform);
+            QuestStep questStep = Object.Instantiate<GameObject>(questStepPrefab, parentTransform).GetComponent<QuestStep>();
+            questStep.InitializeQuestStep(info.id);
         }
     }
 
