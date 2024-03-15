@@ -100,9 +100,15 @@ public class QuestManager : MonoBehaviour
 
     private void FinishQuest(string id)
     {
-        Debug.Log("Finish quest: " + id);
+        Quest quest = GetQuestById(id);
+        ClaimRewards(quest);
+        ChangeQuestState(quest.info.id, QuestState.FINISHED);
     }
 
+    private void ClaimRewards(Quest quest)
+    {
+        GameEventsManager.instance.playerEvents.ExperienceGained(quest.info.experienceReward);
+    }
     private Dictionary<string, Quest> CreateQuestMap()
     {
         QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Quests");
