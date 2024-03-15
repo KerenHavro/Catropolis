@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
 
 
     public float killPercentage = 0.8f; // Percentage of slimes to be killed
-    private bool hasKilled = false;
+    //private bool hasKilled = false;
 
 
 
