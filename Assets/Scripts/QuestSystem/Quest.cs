@@ -6,23 +6,23 @@ public class Quest : MonoBehaviour
 {
     public QuestInfoSO info;
     public QuestState state;
-    private int CurrentQuestStepIndex;
+    private int currentQuestStepIndex;
 
     public Quest(QuestInfoSO questInfo)
     {
         this.info = questInfo;
         this.state = QuestState.REQUIREMENTS_NOT_MET;
-        this.CurrentQuestStepIndex = 0;
+        this.currentQuestStepIndex = 0;
     }
 
     public void MoveToNextStep()
     {
-        CurrentQuestStepIndex++;
+        currentQuestStepIndex++;
     }
 
     public bool CurrentStepExist()
     {
-        return (CurrentQuestStepIndex < info.QuestStepPrefabs.Length);
+        return (currentQuestStepIndex < info.questStepPrefabs.Length);
     }
     
     public void InstantiateCurrentQuestStep(Transform parentTransform)
@@ -41,7 +41,7 @@ public class Quest : MonoBehaviour
         GameObject questStepPrefab = null;
         if (CurrentStepExist())
         {
-            questStepPrefab = info.QuestStepPrefabs[CurrentQuestStepIndex];
+            questStepPrefab = info.questStepPrefabs[currentQuestStepIndex];
         }
         else
         {

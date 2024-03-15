@@ -9,22 +9,52 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
 
-
-        Quest quest = GetQuestById("CollectCoinsQuest");
-        Debug.Log(quest.info.displayName);
-        Debug.Log(quest.info.levelRequirement);
-        Debug.Log(quest.state);
-        Debug.Log(quest.CurrentStepExist());
-
         questMap = CreateQuestMap();
     }
-    
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.questEvents.onStartQuest += StartQuest;
+        GameEventsManager.instance.questEvents.onAdvanceQuest += AdvanceQuest;
+        GameEventsManager.instance.questEvents.onFinishQuest += FinishQuest;
+
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.instance.questEvents.onStartQuest -= StartQuest;
+        GameEventsManager.instance.questEvents.onAdvanceQuest -= AdvanceQuest;
+        GameEventsManager.instance.questEvents.onFinishQuest -= FinishQuest;
+
+    }
+
+    private void Start()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+            GameEventsManager.instance.questEvents.QuestStateChange(quest);
+        }
+    }
+    private void StartQuest(string id)
+    {
+        Debug.Log("start quest: " + id);
+    }
+
+    private void AdvanceQuest(string id)
+    {
+        Debug.Log("Advanced quest: " + id);
+    }
+
+    private void FinishQuest(string id)
+    {
+        Debug.Log("Finish quest: " + id);
+    }
+
     private Dictionary<string, Quest> CreateQuestMap()
     {
         QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Quests");
 
         Dictionary<string, Quest> idToQuestMap = new Dictionary<string, Quest>();
-        foreach(QuestInfoSO questInfo in allQuests)
+        foreach (QuestInfoSO questInfo in allQuests)
         {
             if (idToQuestMap.ContainsKey(questInfo.id))
             {
@@ -37,9 +67,13 @@ public class QuestManager : MonoBehaviour
     private Quest GetQuestById(string id)
     {
         Quest quest = questMap[id];
-        if(quest== null)
+        if (quest == null)
         {
             Debug.LogError("ID not found in the Quest Map " + id);
+        }
+        else
+        {
+            Debug.Log("ID found in the Quest Map " + id);
         }
         return quest;
     }
