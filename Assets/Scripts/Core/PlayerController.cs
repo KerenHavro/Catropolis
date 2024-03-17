@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null && hit.collider.CompareTag("NPC"))
             {
-                GameEventsManager.instance.inputEvents.SubmitPressed();
+               
                 npc = hit.collider.gameObject.GetComponent<NPCController>(); // Assign to class-level variable
                 if (npc != null)
                 {
@@ -37,8 +37,12 @@ public class PlayerController : MonoBehaviour
                     
                 }
             }
+            if (hit.collider != null && hit.collider.CompareTag("Quest"))
+            {
+                GameEventsManager.instance.inputEvents.SubmitPressed();
+            }
             else
-                
+
                 StartCoroutine(AttackAnimation());
             
         }

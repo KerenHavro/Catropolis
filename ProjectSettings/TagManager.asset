@@ -9,6 +9,7 @@ TagManager:
   - Tree
   - NPC
   - Button
+  - Quest
   layers:
   - Default
   - TransparentFX
