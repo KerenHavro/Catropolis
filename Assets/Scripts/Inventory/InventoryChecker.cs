@@ -37,14 +37,14 @@ public class InventoryChecker : MonoBehaviour
             // Loop through inventory slots to count wood
             for (int i = 0; i < itemSlots.Length; i++)
             {
-            if ((itemSlots[i].itemName == "Wood") && removedItem != howMuchToRemove)
+            if ((itemSlots[i].itemName == itemToRemove) && removedItem != howMuchToRemove)
             {
                 int thisQuantity= itemSlots[i].quantity;
                 for (int j = 0; j < thisQuantity; j++)
                 {
                     itemSlots[i].GetComponent<ItemSlot>().SubThisItem();
                     removedItem++;
-                    Debug.Log("woodremoved");
+                    Debug.Log(itemToRemove);
 
                 }
             }
