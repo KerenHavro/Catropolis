@@ -4,27 +4,53 @@ using UnityEngine;
 
 public class GatherWoodQuestStep : QuestStep
 {
- 
+    [SerializeField]
+    private InventoryChecker inventoryChecker;
     private int woodCollected = 0;
     private int woodToComplete = 5;
+    private bool isNear;
 
-    private void OnEnable()
+    private void Start()
     {
-        GameEventsManager.instance.miscEvents.onWoodCollected += WoodCollected;
+        // Find the InventoryCanvas GameObject in the scene
+        GameObject inventoryCanvas = GameObject.Find("InventoryCanvas");
+
+        if (inventoryCanvas != null)
+        {
+            // Get the InventoryChecker component from the InventoryCanvas GameObject
+            inventoryChecker = inventoryCanvas.GetComponent<InventoryChecker>();
+        }
+        else
+        {
+            Debug.LogError("Could not find InventoryCanvas GameObject in the scene.");
+        }
     }
 
-    private void OnDisable()
+    public void Update()
     {
-        GameEventsManager.instance.miscEvents.onWoodCollected -= WoodCollected;
+        if (inventoryChecker != null)
+        {
+            int woodCollected = inventoryChecker.CalculateWoodCount();
+            WoodCollected(woodCollected);
+        }
+        else
+        {
+            Debug.LogError("InventoryChecker is not assigned.");
+        }
     }
 
-    private void WoodCollected(int collectedAmount)
+
+
+    public void WoodCollected(int collectedAmount)
     {
         woodCollected = collectedAmount;
 
-        if (woodCollected >= woodToComplete)
+        if ((woodCollected >= woodToComplete))
         {
+            inventoryChecker.RemoveWoodCount();
             FinishedQuestStep();
+           
+            UpdateState();
         }
         else
         {

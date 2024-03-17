@@ -5,16 +5,12 @@ using UnityEngine;
 
 public class InventoryChecker : MonoBehaviour
 {
+
     //public InventoryManager inventoryManager; // Reference to the InventoryManager script
     public ItemSlot[] itemSlots;
 
     public int woodCount; // To keep track of previous wood count
-
-    private void Update()
-    {
-        CalculateWoodCount();
-        FiveWood();
-    }
+    public int removedWood=0;
     public int CalculateWoodCount()
     {
         woodCount = 0;
@@ -28,19 +24,30 @@ public class InventoryChecker : MonoBehaviour
 
             }
         }
-        
-        
+
+
         return woodCount;
-        
+
 
     }
-  private void FiveWood()
+
+    public void RemoveWoodCount()
     {
-        if(woodCount>=5)
-      GameEventsManager.instance.miscEvents.WoodCollected(5);
-        if (woodCount < 5)
-            Debug.Log("less");
-            GameEventsManager.instance.miscEvents.WoodCollected(0);
-    }
-  
+
+            // Loop through inventory slots to count wood
+            for (int i = 0; i < itemSlots.Length; i++)
+            {
+            if ((itemSlots[i].itemName == "Wood") && removedWood != 5)
+            {
+                int thisQuantity= itemSlots[i].quantity;
+                for (int j = 0; j < thisQuantity; j++)
+                {
+                    itemSlots[i].GetComponent<ItemSlot>().SubThisItem();
+                    removedWood++;
+                    Debug.Log("woodremoved");
+
+                }
+            }
+            }
+        }
 }

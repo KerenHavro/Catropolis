@@ -209,16 +209,21 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
                 itemToDrop.AddComponent<BoxCollider2D>();
                 itemToDrop.transform.position = GameObject.FindWithTag("Player").transform.position + new Vector3(0, 2f, 0);
 
-                //sub the item
-                this.quantity -= 1;
-                quantityText.text = this.quantity.ToString();
-                if (this.quantity <= 0)
-                    EmptySlot();
+            //sub the item
+            SubThisItem();
 
             }
             else
                 return;
         }
+    public void SubThisItem()
+    {
+        //sub the item
+        this.quantity -= 1;
+        quantityText.text = this.quantity.ToString();
+        if (this.quantity <= 0)
+            EmptySlot();
+    }
 
     public void UpdateUI()
     {

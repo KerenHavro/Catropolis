@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7400188361084010338}
-  - component: {fileID: -4112493616649801785}
+  - component: {fileID: 2881677422299134512}
   m_Layer: 0
   m_Name: GatherWoodQuestStep
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4112493616649801785
+--- !u!114 &2881677422299134512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab8ba0615368af4681711c1789f21b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryChecker: {fileID: 0}
