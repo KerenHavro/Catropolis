@@ -12,7 +12,7 @@ namespace DialogueSystem
        
         private void OnEnable()
         {
-            
+           
             dialogueSeq = DialogueSequence();
             StartCoroutine(dialogueSeq);
         }
@@ -22,13 +22,14 @@ namespace DialogueSystem
             if (Input.GetKey(KeyCode.Escape))
             {
                 Deactivate();
-                gameObject.SetActive(false);
+                gameObject.SetActive(false); //set active
                 StopCoroutine(dialogueSeq);
             }
         }
 
         private IEnumerator DialogueSequence()
         {
+
             if (!dialogueFinished)
             {
                 for (int i = 0; i < transform.childCount-1; i++)
@@ -36,7 +37,8 @@ namespace DialogueSystem
                     Deactivate();
                     GameObject currentChild = transform.GetChild(i).gameObject;
                     currentChild.SetActive(true);
-
+                    
+                    currentChild.GetComponent<DialogueLine>().PlayLine();
                     DialogueLine dialogueLine = currentChild.GetComponent<DialogueLine>();
 
 
@@ -45,7 +47,7 @@ namespace DialogueSystem
                     yield return new WaitUntil(() => Input.GetMouseButton(0));
 
                 }
-                Board.gameObject.SetActive(true);
+                Board.gameObject.SetActive(true); 
 
             }
             else
@@ -53,8 +55,8 @@ namespace DialogueSystem
                 Deactivate();
                 int index = transform.childCount-1;
                 GameObject currentChild = transform.GetChild(index).gameObject;
-                currentChild.SetActive(true);
-
+                 currentChild.SetActive(true);
+                currentChild.GetComponent<DialogueLine>().PlayLine();
                 DialogueLine dialogueLine = currentChild.GetComponent<DialogueLine>();
 
 
@@ -66,7 +68,7 @@ namespace DialogueSystem
 
             }
             dialogueFinished = true;
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); //set active
             
             
 

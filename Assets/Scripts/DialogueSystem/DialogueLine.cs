@@ -38,7 +38,7 @@ namespace DialogueSystem
             imageHolder.preserveAspect = true;
         }
 
-        private void OnEnable()
+        public void PlayLine()
         {
            
             ResetLine();
