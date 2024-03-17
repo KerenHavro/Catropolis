@@ -8,7 +8,7 @@ public class GatherWoodQuestStep : QuestStep
     private InventoryChecker inventoryChecker;
     private int woodCollected = 0;
     private int woodToComplete = 5;
-    private bool isNear;
+
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class GatherWoodQuestStep : QuestStep
     {
         if (inventoryChecker != null)
         {
-            int woodCollected = inventoryChecker.CalculateWoodCount();
+            int woodCollected = inventoryChecker.CalculateItemCount("Wood");
             WoodCollected(woodCollected);
         }
         else
@@ -47,7 +47,7 @@ public class GatherWoodQuestStep : QuestStep
 
         if ((woodCollected >= woodToComplete))
         {
-            inventoryChecker.RemoveWoodCount();
+            inventoryChecker.RemoveItemCount("Wood", 5);
             FinishedQuestStep();
            
             UpdateState();

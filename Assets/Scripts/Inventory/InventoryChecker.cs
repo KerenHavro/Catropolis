@@ -9,41 +9,41 @@ public class InventoryChecker : MonoBehaviour
     //public InventoryManager inventoryManager; // Reference to the InventoryManager script
     public ItemSlot[] itemSlots;
 
-    public int woodCount; // To keep track of previous wood count
-    public int removedWood=0;
-    public int CalculateWoodCount()
+    public int ItemCount; // To keep track of previous wood count
+    public int removedItem=0;
+    public int CalculateItemCount(string itemToCount)
     {
-        woodCount = 0;
+        ItemCount = 0;
         // Loop through inventory slots to count wood
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].itemName == "Wood")
+            if (itemSlots[i].itemName == itemToCount)
             {
-                woodCount = itemSlots[i].quantity;
-                Debug.Log("wood!");
+                ItemCount = itemSlots[i].quantity;
+                Debug.Log(itemToCount);
 
             }
         }
 
 
-        return woodCount;
+        return ItemCount;
 
 
     }
 
-    public void RemoveWoodCount()
+    public void RemoveItemCount(string itemToRemove, int howMuchToRemove)
     {
 
             // Loop through inventory slots to count wood
             for (int i = 0; i < itemSlots.Length; i++)
             {
-            if ((itemSlots[i].itemName == "Wood") && removedWood != 5)
+            if ((itemSlots[i].itemName == "Wood") && removedItem != howMuchToRemove)
             {
                 int thisQuantity= itemSlots[i].quantity;
                 for (int j = 0; j < thisQuantity; j++)
                 {
                     itemSlots[i].GetComponent<ItemSlot>().SubThisItem();
-                    removedWood++;
+                    removedItem++;
                     Debug.Log("woodremoved");
 
                 }
