@@ -26,6 +26,20 @@ public class ItemSO : ScriptableObject
                 return true;
             }
         }
+       
+        if (statToChange == StatToChange.hunger)
+        {
+            Player playerHunger = GameObject.Find("player").GetComponent<Player>();
+            if (playerHunger.CurrentHunger == playerHunger.MaxHunger)
+            {
+                return false;
+            }
+            else
+            {
+                playerHunger.Feed(amountToChangeStat);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -34,7 +48,8 @@ public class ItemSO : ScriptableObject
     public enum StatToChange
     {
         none,
-        health
+        health,
+        hunger
     }
     public enum AttributesToChange
     {

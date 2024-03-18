@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7367220031354483052}
   m_Layer: 5
   m_Name: ItemImage
-  m_TagString: Untagged
+  m_TagString: Other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 1934678879952502142}
   m_Layer: 5
   m_Name: ItemSlot
-  m_TagString: Untagged
+  m_TagString: Other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.15686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 4450118813216969001}
   m_Layer: 5
   m_Name: Panel
-  m_TagString: Untagged
+  m_TagString: Other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 4370017584362600103}
   m_Layer: 5
   m_Name: QuantityText
-  m_TagString: Untagged
+  m_TagString: Other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 6916599902838923142}
   m_Layer: 5
   m_Name: SelectedPanel
-  m_TagString: Untagged
+  m_TagString: Other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.15686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

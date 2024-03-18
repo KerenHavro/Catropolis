@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fish
   m_EditorClassIdentifier: 
   itemName: Fish
-  statToChange: 1
+  statToChange: 2
   amountToChangeStat: 10
   attributesToChange: 0
   amountToChangeAttribute: 0

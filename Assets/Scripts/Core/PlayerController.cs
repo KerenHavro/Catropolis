@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
     private bool isAttacking = false;
     public float attackRange = 2f;
     private NPCController npc;
+    public Player player;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        player = GetComponent<Player>();
     }
 
     void Update()
@@ -25,32 +27,38 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null && hit.collider.CompareTag("NPC"))
             {
-               
+
                 npc = hit.collider.gameObject.GetComponent<NPCController>(); // Assign to class-level variable
                 if (npc != null)
                 {
-                    
+
                     animator.SetFloat("Speed", 0);
                     speed = 0;
                     npc.ActivateDialogue();
                     // Set isAttacking to false to ensure the player stops attacking when initiating dialogue
-                    
+
                 }
             }
             if (hit.collider != null && hit.collider.CompareTag("Quest"))
             {
                 GameEventsManager.instance.inputEvents.SubmitPressed();
             }
+            if (hit.collider != null && hit.collider.CompareTag("Other"))
+            {
+                //nothing
+            }
             else
+            {
 
+                player.GetHungry(1);
                 StartCoroutine(AttackAnimation());
-            
+            }
         }
 
         // Check if the player is in dialogue
         if (!InDialogue())
         {
-            
+
             // Input
             moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             float horizontalInput = Input.GetAxis("Horizontal");
@@ -149,6 +157,8 @@ public class PlayerController : MonoBehaviour
     void InflictDamage(IDamagable target)
     {
         target.TakeDamage(10);
+
+
     }
 
     bool IsInDistance(Vector2 TargetLocation)

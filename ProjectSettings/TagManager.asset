@@ -10,6 +10,7 @@ TagManager:
   - NPC
   - Button
   - Quest
+  - Other
   layers:
   - Default
   - TransparentFX
@@ -58,4 +59,7 @@ TagManager:
     locked: 0
   - name: New Layer 4
     uniqueID: 346400447
+    locked: 0
+  - name: New Layer 5
+    uniqueID: 4237284327
     locked: 0
