@@ -107,8 +107,7 @@ public class Player : MonoBehaviour, IDamagable
             }
             
         }
-        
        
-    }
+        }
 
 }

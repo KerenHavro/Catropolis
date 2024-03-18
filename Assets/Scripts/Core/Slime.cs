@@ -11,6 +11,8 @@ public class Slime : MonoBehaviour, IDamagable
     public float knockbackDistance = 5f;
     public float chaseRange = 5f;
 
+    public bool isNear;
+
     public Animator animator;
 
     [SerializeField] private int maxHealth = 100;
@@ -167,7 +169,8 @@ public class Slime : MonoBehaviour, IDamagable
             IDamagable currentPlayer = collision.gameObject.GetComponent<IDamagable>();
             if (currentPlayer != null)
             {
-                InflictDamage(currentPlayer);
+                isNear = true;
+                DealDamageRepeatedly(currentPlayer);
             }
         }
     }
@@ -176,8 +179,7 @@ public class Slime : MonoBehaviour, IDamagable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            IDamagable currentPlayer = collision.gameObject.GetComponent<IDamagable>();
-            StopCoroutine(DealDamageRepeatedly(currentPlayer));
+            isNear = false;
         }
     }
 
@@ -185,8 +187,12 @@ public class Slime : MonoBehaviour, IDamagable
     {
         while (true)
         {
-            InflictDamage(player);
+            player.TakeDamage(10);
             yield return new WaitForSeconds(1f);
+            if (!isNear)
+            {
+                StopAllCoroutines();
+            }
         }
     }
 }
