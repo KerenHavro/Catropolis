@@ -22,7 +22,6 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField]
     public GameObject deathBoard;
 
-
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
 

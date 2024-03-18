@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: Catropolis
-  defaultCursor: {fileID: 2800000, guid: 2834f9506813d3b4b81e00f7b405351b, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 151d4aaebf4fbfc4d935dfa6c6910588, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1

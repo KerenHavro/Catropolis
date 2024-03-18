@@ -12,6 +12,18 @@ public class PlayerController : MonoBehaviour
     private NPCController npc;
     public Player player;
 
+
+    [SerializeField]
+    private AudioClip[] mines;
+
+    [SerializeField]
+    private AudioClip[] chops;
+
+
+    [SerializeField]
+    private AudioClip[] hits;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -131,6 +143,13 @@ public class PlayerController : MonoBehaviour
                 if (target != null)
                 {
                     InflictDamage(target);
+
+                    // Play a random sound from the array of sounds
+                    if (hits.Length > 0)
+                    {
+                        int randomIndex = Random.Range(0, hits.Length);
+                        SoundManager.instance.PlaySound(hits[randomIndex]);
+                    }
                     // Pass the target variable to the InflictDamage method
                 }
             }
@@ -141,6 +160,12 @@ public class PlayerController : MonoBehaviour
                 {
                     // Mine the object
                     mineableObject.Mine();
+                    // Play a random sound from the array of sounds
+                    if (mines.Length > 0)
+                    {
+                        int randomIndex = Random.Range(0, mines.Length);
+                        SoundManager.instance.PlaySound(mines[randomIndex]);
+                    }
                 }
             }
         }

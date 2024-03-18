@@ -18,6 +18,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     Transform oldParentTransform;
 
+    [SerializeField]
+    public AudioClip[] itemSounds;
+
     public ItemSO[] itemSOs;
     // Start is called before the first frame update
     void Start()
@@ -119,11 +122,17 @@ public class InventoryManager : MonoBehaviour
     {
         if(itemType== ItemType.consumable || itemType == ItemType.collectable ||itemType == ItemType.crafting)
         {
+           
 
             for (int i = 0; i < itemSlot.Length; i++)
             {
                 if (itemSlot[i].isFull == false && itemSlot[i].itemName == itemName || itemSlot[i].quantity == 0)
                 {
+                    if (itemSounds.Length > 0)
+                    {
+                        int randomIndex = UnityEngine.Random.Range(0, itemSounds.Length);
+                        SoundManager.instance.PlaySound(itemSounds[randomIndex]);
+                    }
                     int leftOverItems = itemSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
                     if (leftOverItems > 0)
                         leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);
@@ -140,6 +149,11 @@ public class InventoryManager : MonoBehaviour
             {
                 if (equipmentSlot[i].isFull == false && equipmentSlot[i].itemName == itemName || equipmentSlot[i].quantity == 0)
                 {
+                    if (itemSounds.Length > 0)
+                    {
+                        int randomIndex = UnityEngine.Random.Range(0, itemSounds.Length);
+                        SoundManager.instance.PlaySound(itemSounds[randomIndex]);
+                    }
                     int leftOverItems = equipmentSlot[i].AddItem(itemName, quantity, itemSprite, itemDescription, itemType);
                     if (leftOverItems > 0)
                         leftOverItems = AddItem(itemName, leftOverItems, itemSprite, itemDescription, itemType);

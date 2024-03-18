@@ -102,6 +102,10 @@ MonoBehaviour:
   itemName: Wood
   quantity: 1
   sprite: {fileID: 1356359653, guid: 4c71e4a4797ff834bb519ff4433fd1ad, type: 3}
+  itemSounds:
+  - {fileID: 8300000, guid: be31f47bcd3f88f4ca24f18ba42150ff, type: 3}
+  - {fileID: 8300000, guid: d797eb2866fa3864bbd54565c9167236, type: 3}
+  - {fileID: 8300000, guid: a0718259c870ee5429ceea57e780e301, type: 3}
   itemDescription: Wood.
   itemType: 1
 --- !u!50 &7453693695787796992

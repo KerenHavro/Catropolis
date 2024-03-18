@@ -238,6 +238,7 @@ MonoBehaviour:
   knockbackSpeed: 5
   knockbackDistance: 5
   chaseRange: 5
+  isNear: 0
   animator: {fileID: 6320369616442029136}
   maxHealth: 100
 --- !u!1 &4859316524639262308
