@@ -20,7 +20,9 @@ namespace DialogueSystem
 
         [Header("Text sound")]
         [SerializeField]
-        private AudioClip sound;
+        private AudioClip[] sounds;
+        [SerializeField]
+        private AudioClip meow;
 
         [Header("Char Image")]
         [SerializeField]
@@ -42,7 +44,7 @@ namespace DialogueSystem
         {
            
             ResetLine();
-            lineAppear = WriteText(input, textHolder, delay, textColor, sound, delayBetweenLines);
+            lineAppear = WriteText(input, textHolder, delay, textColor, sounds, delayBetweenLines, meow);
             StartCoroutine(lineAppear);
         }
 
