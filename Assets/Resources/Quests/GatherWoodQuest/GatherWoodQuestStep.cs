@@ -27,7 +27,19 @@ public class GatherWoodQuestStep : QuestStep
     }
 
     public void Update()
+
     {
+        GameObject inventoryCanvas = GameObject.Find("InventoryCanvas");
+
+        if (inventoryCanvas != null)
+        {
+            // Get the InventoryChecker component from the InventoryCanvas GameObject
+            inventoryChecker = inventoryCanvas.GetComponent<InventoryChecker>();
+        }
+        else
+        {
+            Debug.LogError("Could not find InventoryCanvas GameObject in the scene.");
+        }
         if (inventoryChecker != null)
         {
             int woodCollected = inventoryChecker.CalculateItemCount("Wood");
