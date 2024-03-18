@@ -43,14 +43,15 @@ public class PlayerController : MonoBehaviour
             {
                 GameEventsManager.instance.inputEvents.SubmitPressed();
             }
-            if (hit.collider != null && hit.collider.CompareTag("Other"))
+            if (hit.collider != null &&( hit.collider.CompareTag("Object")|| hit.collider.CompareTag("Enemy")))
             {
-                //nothing
+                player.GetHungry(1);
+                StartCoroutine(AttackAnimation());
             }
             else
             {
 
-                player.GetHungry(1);
+                
                 StartCoroutine(AttackAnimation());
             }
         }
