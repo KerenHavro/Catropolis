@@ -19,6 +19,8 @@ public class Player : MonoBehaviour, IDamagable
     public HealthBar hungerBar;
     public int maxHunger = 100;
 
+    [SerializeField]
+    public GameObject deathBoard;
 
 
     public int MaxHealth => maxHealth;
@@ -57,7 +59,8 @@ public class Player : MonoBehaviour, IDamagable
 
     public void Die()
     {
-        // Handle death actions, such as respawning or game over
+        this.gameObject.SetActive(false);
+        deathBoard.SetActive(true);
         Debug.Log("Player has died!");
     }
 

@@ -36,7 +36,7 @@ public class Slime : MonoBehaviour, IDamagable
         currentHealth = maxHealth;
 
         // Find the player GameObject with the "Player" tag and get its Transform component
-        GameObject playerObject = GameObject.FindWithTag("Player");
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         if (playerObject != null)
         {
             playerTransform = playerObject.transform;
@@ -72,7 +72,7 @@ public class Slime : MonoBehaviour, IDamagable
         {
             transform.position = Vector2.MoveTowards(transform.position, patrolDestination, patrolSpeed * Time.deltaTime);
         }
-        if (Vector2.Distance(transform.position, patrolDestination) < 0.1f)
+        else
         {
             SetNewPatrolDestination();
         }
@@ -141,9 +141,9 @@ public class Slime : MonoBehaviour, IDamagable
     {
         Vector2 knockbackDirection = ((Vector2)transform.position - damageSourcePosition).normalized;
         Vector2 endPosition = (Vector2)transform.position + knockbackDirection * knockbackDistance;
-        float elapsedKnockbackTime = 1f;
+        float elapsedKnockbackTime = 0f;
 
-        while (elapsedKnockbackTime < 2f)
+        while (elapsedKnockbackTime < 0.2f)
         {
             transform.position = Vector2.MoveTowards(transform.position, endPosition, knockbackSpeed * Time.deltaTime);
             elapsedKnockbackTime += Time.deltaTime;
@@ -154,11 +154,11 @@ public class Slime : MonoBehaviour, IDamagable
         currentState = ChaseState;
     }
 
-    public void InflictDamage(IDamagable Player)
+    public void InflictDamage(IDamagable player)
     {
-        if (Player != null)
+        if (player != null)
         {
-            Player.TakeDamage(10);
+            player.TakeDamage(10);
         }
     }
 
@@ -170,7 +170,7 @@ public class Slime : MonoBehaviour, IDamagable
             if (currentPlayer != null)
             {
                 isNear = true;
-                DealDamageRepeatedly(currentPlayer);
+                StartCoroutine(DealDamageRepeatedly(currentPlayer));
             }
         }
     }
@@ -185,14 +185,10 @@ public class Slime : MonoBehaviour, IDamagable
 
     IEnumerator DealDamageRepeatedly(IDamagable player)
     {
-        while (true)
+        while (isNear)
         {
             player.TakeDamage(10);
             yield return new WaitForSeconds(1f);
-            if (!isNear)
-            {
-                StopAllCoroutines();
-            }
         }
     }
 }
