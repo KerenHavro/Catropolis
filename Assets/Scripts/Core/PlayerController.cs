@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
 
     void InflictDamage(IDamagable target)
     {
-        target.TakeDamage(10);
+        player.InflictDamage(target);
 
 
     }
