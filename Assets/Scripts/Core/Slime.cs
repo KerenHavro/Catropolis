@@ -30,7 +30,7 @@ public class Slime : MonoBehaviour, IDamagable
     {
         initialPosition = transform.position;
         SetNewPatrolDestination();
-        animator.SetBool("Hit", false);
+        animator.SetTrigger("Hit");
         healthBar.SetMaxHealth(maxHealth);
         currentState = PatrolState;
         currentHealth = maxHealth;
@@ -114,7 +114,7 @@ public class Slime : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damageAmount)
     {
-        animator.SetBool("Hit", true);
+        animator.SetTrigger("Hit");
         Vector2 damageSourcePosition = playerTransform.position;
         currentHealth -= damageAmount;
         healthBar.SetHealth(currentHealth);
