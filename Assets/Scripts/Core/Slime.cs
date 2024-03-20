@@ -31,6 +31,7 @@ public class Slime : MonoBehaviour, IDamagable
         initialPosition = transform.position;
         SetNewPatrolDestination();
         animator.SetTrigger("Hit");
+        animator.SetTrigger("Die");
         healthBar.SetMaxHealth(maxHealth);
         currentState = PatrolState;
         currentHealth = maxHealth;
@@ -128,8 +129,7 @@ public class Slime : MonoBehaviour, IDamagable
 
     public void Die()
     {
-        Debug.Log("Slime enemy has been defeated!");
-        Destroy(gameObject);
+        StartCoroutine(Death());
     }
 
     void ApplyKnockback(Vector2 damageSourcePosition)
@@ -191,4 +191,15 @@ public class Slime : MonoBehaviour, IDamagable
             yield return new WaitForSeconds(1f);
         }
     }
+
+    IEnumerator Death()
+    {
+        isNear = false;
+        animator.SetTrigger("Die");
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+
+    }
+
+
 }

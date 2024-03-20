@@ -18,9 +18,12 @@ public class Player : MonoBehaviour, IDamagable
     public int currentHunger;
     public HealthBar hungerBar;
     public int maxHunger = 100;
+    public int playerDmg;
 
     [SerializeField]
     public GameObject deathBoard;
+
+    public PlayerStats playerStats;
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth => currentHealth;
@@ -28,15 +31,23 @@ public class Player : MonoBehaviour, IDamagable
     public int MaxHunger => maxHunger;
     public int CurrentHunger => currentHunger;
 
+    public int CurrentMiningPower => currentMiningPower;
+    public int CurrentChoppingPower=> currentChoppingPower;
+
+    public int PlayerDmg => playerDmg;
+
 
     void Start()
     {
+        GameObject playerStatsObject = GameObject.FindGameObjectWithTag("StatManager");
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHunger = maxHunger;
         hungerBar.SetMaxHealth(maxHunger);
- 
-
+        playerStats = playerStatsObject.GetComponent<PlayerStats>();
+        currentMiningPower = playerStats.miningStrength;
+        currentChoppingPower = playerStats.choppingStrenght;
+        playerDmg = playerStats.attack;
     }
 
     public void TakeDamage(int damageAmount)
@@ -68,7 +79,7 @@ public class Player : MonoBehaviour, IDamagable
         // Assuming target is also IDamagable
         if (Enemy != null)
         {
-            Enemy.TakeDamage(10); // Inflict 10 damage
+            Enemy.TakeDamage(playerDmg); // Inflict 10 damage
         }
     }
 

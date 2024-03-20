@@ -6,7 +6,7 @@ using UnityEngine;
 public class EquipmentSO : ScriptableObject
 {
     public string itemName;
-    public int attack, defense, agility, intelligence;
+    public int attack, defense, agility, choppingStrenght, miningStrength;
     [SerializeField]
     private Sprite itemSprite;
     [SerializeField]
@@ -16,7 +16,7 @@ public class EquipmentSO : ScriptableObject
     public void PreviewEquipment()
     {
         GameObject.Find("StatManager").GetComponent<PlayerStats>().
-            PreviewEquipmentStats(attack, defense, agility, intelligence, itemSprite);
+            PreviewEquipmentStats(attack, defense, agility, choppingStrenght, miningStrength, itemSprite);
     }
 
     public void EquipItem()
@@ -26,7 +26,8 @@ public class EquipmentSO : ScriptableObject
         playerstats.attack += attack;
         playerstats.defense += defense;
         playerstats.agility += agility;
-        playerstats.intelligance += intelligence;
+        playerstats.choppingStrenght += choppingStrenght;
+        playerstats.miningStrength += miningStrength;
 
         playerstats.UpdateEquippmentStats();
     }
@@ -41,7 +42,8 @@ public class EquipmentSO : ScriptableObject
             playerstats.attack -= attack;
             playerstats.defense -= defense;
             playerstats.agility -= agility;
-            playerstats.intelligance -= intelligence;
+            playerstats.choppingStrenght -= choppingStrenght;
+            playerstats.miningStrength -= miningStrength;
 
         }
 
