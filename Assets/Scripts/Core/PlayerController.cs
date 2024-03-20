@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
                 if (mineableObject != null)
                 {
                     // Mine the object
-                    mineableObject.Mine();
+                    mineableObject.Mine(player.currentMiningPower, player.currentChoppingPower);
                     // Play a random sound from the array of sounds
                     if (mines.Length > 0)
                     {

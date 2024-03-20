@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mineableItem: {fileID: 11400000, guid: 46a8ace63b4c0684987b7b6f0ff01929, type: 2}
+  currentHealth: 50
 --- !u!61 &62416998860161625
 BoxCollider2D:
   m_ObjectHideFlags: 0

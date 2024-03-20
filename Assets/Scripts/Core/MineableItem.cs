@@ -13,5 +13,5 @@ public class MineableItem : ScriptableObject
 
     public string itemName;
     public CollectibleItemDrop[] collectibleItems;
-    public int maxHealth = 3; // Adjust as needed
+    public int maxHealth = 50; // Adjust as needed
 }

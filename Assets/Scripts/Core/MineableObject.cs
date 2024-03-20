@@ -4,6 +4,7 @@ public class MineableObject : MonoBehaviour
 {
     public MineableItem mineableItem;
 
+    [SerializeField]
     private int currentHealth;
 
     void Start()
@@ -12,13 +13,25 @@ public class MineableObject : MonoBehaviour
     }
 
     // Method to handle mining interaction
-    public void Mine()
+    public void Mine(int mine, int chop)
     {
-        currentHealth--;
-
-        if (currentHealth <= 0)
+        if (this.gameObject.name == "Rock")
         {
-            DropItems();
+            currentHealth= currentHealth- mine ;
+
+            if (currentHealth <= 0)
+            {
+                DropItems();
+            }
+        }
+        if (this.gameObject.name == "Tree")
+        {
+            currentHealth = currentHealth - chop;
+
+            if (currentHealth <= 0)
+            {
+                DropItems();
+            }
         }
         // Optionally, you can play mining animation or sound here
     }
