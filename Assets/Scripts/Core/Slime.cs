@@ -82,6 +82,11 @@ public class Slime : MonoBehaviour, IDamagable
         {
             currentState = ChaseState;
         }
+        if (Vector2.Distance(transform.position, playerTransform.position) <= attackRange)
+        {
+            currentState = AttackState;
+        }
+
     }
 
     void Chase()
@@ -92,10 +97,15 @@ public class Slime : MonoBehaviour, IDamagable
         {
             currentState = AttackState;
         }
+        else if (Vector2.Distance(transform.position, playerTransform.position) < chaseRange)
+        {
+            currentState = ChaseState;
+        }
         else if (Vector2.Distance(transform.position, playerTransform.position) > chaseRange)
         {
             currentState = PatrolState;
         }
+
     }
 
     void Attack()
@@ -106,6 +116,15 @@ public class Slime : MonoBehaviour, IDamagable
         {
             currentState = ChaseState;
         }
+        else if (Vector2.Distance(transform.position, playerTransform.position) < attackRange)
+        {
+            currentState = ChaseState;
+        }
+        else if (Vector2.Distance(transform.position, playerTransform.position) > chaseRange)
+        {
+            currentState = PatrolState;
+        }
+
     }
 
     void SetNewPatrolDestination()

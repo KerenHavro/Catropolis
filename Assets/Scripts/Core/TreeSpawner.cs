@@ -32,7 +32,8 @@ public class TreeSpawner : MonoBehaviour
         {
             if (!HasTreeAtLocation(spawnLocation.position))
             {
-                Instantiate(treePrefab, spawnLocation.position, Quaternion.identity);
+                GameObject tree= Instantiate(treePrefab, spawnLocation.position, Quaternion.identity);
+                tree.gameObject.name = "Tree";
             }
         }
     }
