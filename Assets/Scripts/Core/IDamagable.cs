@@ -6,5 +6,6 @@ public interface IDamagable
 {
     void TakeDamage(int damageAmount);
     void Die();
-
+    void ApplyKnockback(Vector2 damageSourcePosition);
+ 
 }

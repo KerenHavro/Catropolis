@@ -32,7 +32,7 @@ public class Player : MonoBehaviour, IDamagable
     public int CurrentHunger => currentHunger;
 
     public int CurrentMiningPower => currentMiningPower;
-    public int CurrentChoppingPower=> currentChoppingPower;
+    public int CurrentChoppingPower => currentChoppingPower;
 
     public int PlayerDmg => playerDmg;
 
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         currentHealth = Mathf.Min(maxHealth, currentHealth + healAmount);
         healthBar.SetHealth(currentHealth);
-  
+
     }
 
     public void Die()
@@ -91,15 +91,15 @@ public class Player : MonoBehaviour, IDamagable
     }
     public void GetHungry(int hungerAmount)
     {
- 
+
         currentHunger -= hungerAmount;
         hungerBar.SetHealth(currentHunger);
         if (currentHunger <= 0)
         {
             currentHunger = 0;
-        
-                StartCoroutine(TakeDamageOverTime());
-            
+
+            StartCoroutine(TakeDamageOverTime());
+
         }
         else
         {
@@ -118,9 +118,30 @@ public class Player : MonoBehaviour, IDamagable
             {
                 StopAllCoroutines();
             }
-            
+
         }
-       
+
+    }
+    public void ApplyKnockback(Vector2 damageSourcePosition)
+    {
+        Debug.Log("knocked");
+        StartCoroutine(KnockbackCoroutine(damageSourcePosition));
+    }
+    IEnumerator KnockbackCoroutine(Vector2 damageSourcePosition)
+    {
+        Vector2 knockbackDirection = ((Vector2)transform.position - damageSourcePosition).normalized;
+        Vector2 endPosition = (Vector2)transform.position + knockbackDirection * 2;
+        float elapsedKnockbackTime = 0f;
+
+        while (elapsedKnockbackTime < 0.2f)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, endPosition, 5 * Time.deltaTime);
+            elapsedKnockbackTime += Time.deltaTime;
+            yield return null;
         }
+
+
+    }
+
 
 }

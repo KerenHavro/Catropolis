@@ -132,7 +132,7 @@ public class Slime : MonoBehaviour, IDamagable
         StartCoroutine(Death());
     }
 
-    void ApplyKnockback(Vector2 damageSourcePosition)
+    public void ApplyKnockback(Vector2 damageSourcePosition)
     {
         StartCoroutine(KnockbackCoroutine(damageSourcePosition));
     }
@@ -159,6 +159,7 @@ public class Slime : MonoBehaviour, IDamagable
         if (player != null)
         {
             player.TakeDamage(10);
+            player.ApplyKnockback(gameObject.transform.position);
         }
     }
 
@@ -188,6 +189,7 @@ public class Slime : MonoBehaviour, IDamagable
         while (isNear)
         {
             player.TakeDamage(10);
+            player.ApplyKnockback(gameObject.transform.position);
             yield return new WaitForSeconds(1f);
         }
     }
