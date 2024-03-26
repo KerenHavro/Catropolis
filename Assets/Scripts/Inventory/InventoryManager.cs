@@ -8,7 +8,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventoryMenu;
     public GameObject HotBarMenu;
     public GameObject EquipmentMenu;
-   
+    public GameObject QuestLogMenu;
+
+
     public ItemSlot[] itemSlot;
     public EquipmentSlot[] equipmentSlot;
     public EquippedSlot[] equippedSlot;
@@ -28,6 +30,7 @@ public class InventoryManager : MonoBehaviour
         HotBarMenu.SetActive(true);
         InventoryMenu.SetActive(false);
         EquipmentMenu.SetActive(false);
+        QuestLogMenu.SetActive(false);
         for (int i = 0; i < 8; i++)
         {
             itemSlot[i].transform.SetParent(newParentTransform);
@@ -47,11 +50,33 @@ public class InventoryManager : MonoBehaviour
         }
 
     }
-
-    private void Equipment()
+    public void QuestLog()
     {
 
-        if (EquipmentMenu.activeSelf)
+        if (QuestLogMenu.activeSelf)
+        {
+        
+            InventoryMenu.SetActive(false);
+            QuestLogMenu.SetActive(false);
+
+            HotBarMenu.SetActive(true);
+
+
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            InventoryMenu.SetActive(false);
+            EquipmentMenu.SetActive(false);
+            QuestLogMenu.SetActive(true);
+          
+        }
+    }
+
+    public void Equipment()
+    {
+
+        if (EquipmentMenu.activeSelf )
         {
             HotBarMenu.SetActive(true);
             for (int i = 0; i < 8; i++)
@@ -78,7 +103,7 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    void Inventory()
+    public void Inventory()
     {
         if (InventoryMenu.activeSelf)
         {

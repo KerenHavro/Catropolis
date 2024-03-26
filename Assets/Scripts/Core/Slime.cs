@@ -24,6 +24,8 @@ public class Slime : MonoBehaviour, IDamagable
     private Vector2 initialPosition;
     private Vector2 patrolDestination;
 
+    public MineableItem mineableItem;
+
     private Transform playerTransform; // Reference to the player's Transform
 
     void Start()
@@ -130,8 +132,20 @@ public class Slime : MonoBehaviour, IDamagable
     public void Die()
     {
         StartCoroutine(Death());
+        DropItems();
     }
+    void DropItems()
+    {
+        foreach (var itemDrop in mineableItem.collectibleItems)
+        {
+            if (Random.value <= itemDrop.dropChance)
+            {
+                Instantiate(itemDrop.collectibleItemPrefab, transform.position, Quaternion.identity);
+            }
+        }
 
+        Destroy(gameObject); // Destroy the mineable object after it's mined
+    }
     public void ApplyKnockback(Vector2 damageSourcePosition)
     {
         StartCoroutine(KnockbackCoroutine(damageSourcePosition));

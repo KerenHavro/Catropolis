@@ -241,6 +241,7 @@ MonoBehaviour:
   isNear: 0
   animator: {fileID: 6320369616442029136}
   maxHealth: 100
+  mineableItem: {fileID: 11400000, guid: a1898e665ca791d4a83ded342820d0f1, type: 2}
 --- !u!1 &4859316524639262308
 GameObject:
   m_ObjectHideFlags: 0

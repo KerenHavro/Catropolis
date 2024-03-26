@@ -204,11 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Fish
-  quantity: 3
+  quantity: 1
   sprite: {fileID: 21300000, guid: c7238ac67525c1e4f81f49989bdc114c, type: 3}
-  itemSounds:
-  - {fileID: 8300000, guid: be31f47bcd3f88f4ca24f18ba42150ff, type: 3}
-  - {fileID: 8300000, guid: d797eb2866fa3864bbd54565c9167236, type: 3}
-  - {fileID: 8300000, guid: a0718259c870ee5429ceea57e780e301, type: 3}
   itemDescription: Yummy fish! 3 HP++
   itemType: 0
