@@ -32,7 +32,7 @@ namespace DialogueSystem
 
             if (!dialogueFinished)
             {
-                for (int i = 0; i < transform.childCount-1; i++)
+                for (int i = 0; i < transform.childCount; i++)
                 {
                     Deactivate();
                     GameObject currentChild = transform.GetChild(i).gameObject;
@@ -53,7 +53,7 @@ namespace DialogueSystem
             else
             {
                 Deactivate();
-                int index = transform.childCount-1;
+                int index = transform.childCount;
                 GameObject currentChild = transform.GetChild(index).gameObject;
                  currentChild.SetActive(true);
                 currentChild.GetComponent<DialogueLine>().PlayLine();

@@ -193,6 +193,25 @@ public class PlayerController : MonoBehaviour
         float distance = Vector2.Distance(this.gameObject.transform.position, TargetLocation);
         return distance <= attackRange;
     }
+    void ApplyKnockback(Vector2 damageSourcePosition)
+    {
+        StartCoroutine(KnockbackCoroutine(damageSourcePosition));
+    }
+    IEnumerator KnockbackCoroutine(Vector2 damageSourcePosition)
+    {
+        Vector2 knockbackDirection = ((Vector2)transform.position - damageSourcePosition).normalized;
+        Vector2 endPosition = (Vector2)transform.position + knockbackDirection * 2;
+        float elapsedKnockbackTime = 0f;
+
+        while (elapsedKnockbackTime < 0.2f)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, endPosition, 2 * Time.deltaTime);
+            elapsedKnockbackTime += Time.deltaTime;
+            yield return null;
+        }
+
+      
+    }
 
     void FixedUpdate()
     {
