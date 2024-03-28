@@ -24,4 +24,12 @@ public class MiscEvents
             onGemCollected();
         }
     }
+    public event Action onSlimeKilled;
+    public void SlimeKilled()
+    {
+        if(onSlimeKilled!= null)
+        {
+            onSlimeKilled();
+        }
+    }
 }

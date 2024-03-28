@@ -66,6 +66,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
+            Time.timeScale = 0;
             InventoryMenu.SetActive(false);
             EquipmentMenu.SetActive(false);
             QuestLogMenu.SetActive(true);

@@ -131,6 +131,7 @@ public class Slime : MonoBehaviour, IDamagable
 
     public void Die()
     {
+        GameEventsManager.instance.miscEvents.SlimeKilled();
         StartCoroutine(Death());
         DropItems();
     }
