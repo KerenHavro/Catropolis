@@ -35,7 +35,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SlimeEncounter.unity
     guid: 7264cd4c8642c0f44b9a2a510ca5ce35
-  - enabled: 1
-    path: Assets/Scenes/SlimeCutscene.unity
-    guid: d2922e8187cabcc4cb896879920d464c
   m_configObjects: {}
