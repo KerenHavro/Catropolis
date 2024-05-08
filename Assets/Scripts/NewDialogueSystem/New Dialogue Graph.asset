@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3933430180290396373
+--- !u!114 &-4946652665417967299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,26 +13,26 @@ MonoBehaviour:
   m_Name: Dialogue
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -8, y: -120}
+  position: {x: 88, y: -184}
   ports:
     keys:
     - entry
     - exit
     values:
     - _fieldName: entry
-      _node: {fileID: -3933430180290396373}
+      _node: {fileID: -4946652665417967299}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: exit
-        node: {fileID: 4547740209707748443}
+        node: {fileID: 675318701096886317}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: exit
-      _node: {fileID: -3933430180290396373}
+      _node: {fileID: -4946652665417967299}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections: []
@@ -42,9 +42,9 @@ MonoBehaviour:
       _dynamic: 0
   entry: 0
   exit: 0
-  speakerName: Bazzar
-  dialogueLine: it is working
-  sprite: {fileID: 0}
+  speakerName: 1
+  dialogueLine: 2
+  sprite: {fileID: 21300000, guid: 63e5a3a908dc7c8438d23bd9a768f0ac, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,10 +58,10 @@ MonoBehaviour:
   m_Name: New Dialogue Graph
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 4547740209707748443}
-  - {fileID: -3933430180290396373}
+  - {fileID: 675318701096886317}
+  - {fileID: -4946652665417967299}
   current: {fileID: 0}
---- !u!114 &4547740209707748443
+--- !u!114 &675318701096886317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,18 +74,18 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -376, y: -120}
+  position: {x: -209.90001, y: -194.5}
   ports:
     keys:
     - exit
     values:
     - _fieldName: exit
-      _node: {fileID: 4547740209707748443}
+      _node: {fileID: 675318701096886317}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: entry
-        node: {fileID: -3933430180290396373}
+        node: {fileID: -4946652665417967299}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
