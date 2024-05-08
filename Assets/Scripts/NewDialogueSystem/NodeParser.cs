@@ -9,11 +9,15 @@ public class NodeParser : MonoBehaviour
 {
     public DialogueGraph graph;
     private Coroutine _parser;
+ 
 
     // Use TextMeshPro instead of Unity's built-in UI Text
     public TMP_Text speaker;
     public TMP_Text dialogue;
     public Image speakerImage;
+
+    public float delaybetweenLines;
+    public AudioClip[] sounds;
 
     private void Start()
     {
@@ -57,7 +61,7 @@ public class NodeParser : MonoBehaviour
         {
             // Set speaker and dialogue texts
             speaker.text = dataParts[1];
-            dialogue.text = dataParts[2];
+          
 
             // Set speaker image if available
             Sprite speakerSprite = b.GetSprite();
@@ -66,12 +70,39 @@ public class NodeParser : MonoBehaviour
                 speakerImage.sprite = speakerSprite;
             }
 
-            // Wait for the user to click before proceeding
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            float delayBetweenLines = b.GetFloat();
+            if (delayBetweenLines != 0)
+            {
+                delaybetweenLines = delayBetweenLines;
+            }
 
-            // Proceed to the next node
-            NextNode("exit");
+            AudioClip[] sound = b.GetAudioClips();
+            if (sound != null)
+            {
+                sounds = sound;
+            }
+
+      
+
+            print("enter");
+            for (int i = 0; i < dataParts[2].Length; i++)
+            {
+                dialogue.text += dataParts[2][i];
+
+                // Play a random sound from the array of sounds
+                if (sounds.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, sounds.Length);
+                    SoundManager.instance.PlaySound(sounds[randomIndex]);
+                }
+
+                yield return new WaitForSeconds(delaybetweenLines);
+                
+             
+            }
         }
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        NextNode("exit");
     }
 
     public void NextNode(string fieldName)
@@ -96,4 +127,5 @@ public class NodeParser : MonoBehaviour
         // Restart the parsing coroutine
         _parser = StartCoroutine(ParseNode());
     }
+
 }

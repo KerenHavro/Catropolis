@@ -10,14 +10,28 @@ public class DialogueNode : BaseNode
     public string speakerName;
     public string dialogueLine;
     public Sprite sprite;
+    public float delayBetweenLines;
+    [Header("Text sound")]
+    [SerializeField]
+    private AudioClip[] sound;
+
 
     public override string GetString()
     {
-        return "DialogueNode/"+ speakerName+ "/"+ dialogueLine;
+        return "DialogueNode/" + speakerName + "/" + dialogueLine;
     }
 
     public override Sprite GetSprite()
     {
         return sprite;
+    }
+    public override float GetFloat()
+    {
+        return delayBetweenLines;
+    }
+
+    public override AudioClip[] GetAudioClips()
+    {
+        return sound;
     }
 }
