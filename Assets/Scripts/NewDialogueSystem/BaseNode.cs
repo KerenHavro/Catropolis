@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using XNode;
 
 public class BaseNode : Node
 {
+
     public virtual string GetString()
     {
         return null;
@@ -19,6 +21,11 @@ public class BaseNode : Node
         return 0;
     }
     public virtual AudioClip[] GetAudioClips()
+    {
+        return null;
+    }
+
+    public virtual Button[] Getbutton()
     {
         return null;
     }

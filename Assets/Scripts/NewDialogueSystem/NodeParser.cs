@@ -9,18 +9,21 @@ public class NodeParser : MonoBehaviour
 {
     public DialogueGraph graph;
     private Coroutine _parser;
- 
 
     // Use TextMeshPro instead of Unity's built-in UI Text
     public TMP_Text speaker;
     public TMP_Text dialogue;
     public Image speakerImage;
 
-    public float delaybetweenLines;
+    public GameObject choiceButtonPrefab; // Button prefab for choices
+    public Transform choiceButtonParent;  // Parent for choice buttons
+
+    public float delayBetweenLines;
     public AudioClip[] sounds;
 
     private void Start()
     {
+        
         // Find the "Start" node and set it as the current node
         foreach (BaseNode b in graph.nodes)
         {
@@ -31,12 +34,15 @@ public class NodeParser : MonoBehaviour
             }
         }
 
+        
         // Start the node parsing coroutine
         _parser = StartCoroutine(ParseNode());
     }
 
     private IEnumerator ParseNode()
     {
+        
+
         BaseNode b = graph.current;
         if (b == null)
         {
@@ -54,6 +60,7 @@ public class NodeParser : MonoBehaviour
         // Start node logic
         if (dataParts[0] == "Start")
         {
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
             NextNode("exit");
         }
         // Dialogue node logic
@@ -61,7 +68,7 @@ public class NodeParser : MonoBehaviour
         {
             // Set speaker and dialogue texts
             speaker.text = dataParts[1];
-          
+            dialogue.text = "";
 
             // Set speaker image if available
             Sprite speakerSprite = b.GetSprite();
@@ -73,7 +80,7 @@ public class NodeParser : MonoBehaviour
             float delayBetweenLines = b.GetFloat();
             if (delayBetweenLines != 0)
             {
-                delaybetweenLines = delayBetweenLines;
+                this.delayBetweenLines = delayBetweenLines;
             }
 
             AudioClip[] sound = b.GetAudioClips();
@@ -82,9 +89,6 @@ public class NodeParser : MonoBehaviour
                 sounds = sound;
             }
 
-      
-
-            print("enter");
             for (int i = 0; i < dataParts[2].Length; i++)
             {
                 dialogue.text += dataParts[2][i];
@@ -96,13 +100,86 @@ public class NodeParser : MonoBehaviour
                     SoundManager.instance.PlaySound(sounds[randomIndex]);
                 }
 
-                yield return new WaitForSeconds(delaybetweenLines);
-                
-             
+                yield return new WaitForSeconds(delayBetweenLines);
             }
+
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            dialogue.text = null;
+            NextNode("exit");
         }
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-        NextNode("exit");
+        // Choice node logic
+        else if (b is ChoiceNode choiceNode)
+        {
+            // Set speaker and dialogue texts
+            speaker.text = dataParts[1];
+            dialogue.text = "";
+
+            // Set speaker image if available
+            Sprite speakerSprite = b.GetSprite();
+            if (speakerSprite != null)
+            {
+                speakerImage.sprite = speakerSprite;
+            }
+
+            float delayBetweenLines = b.GetFloat();
+            if (delayBetweenLines != 0)
+            {
+                this.delayBetweenLines = delayBetweenLines;
+            }
+
+            AudioClip[] sound = b.GetAudioClips();
+            if (sound != null)
+            {
+                sounds = sound;
+            }
+
+            for (int i = 0; i < choiceNode.GetString().Split('/')[1].Length; i++)
+            {
+                dialogue.text += choiceNode.GetString().Split('/')[1][i];
+
+                // Play a random sound from the array of sounds
+                if (sounds.Length > 0)
+                {
+                    int randomIndex = Random.Range(0, sounds.Length);
+                    SoundManager.instance.PlaySound(sounds[randomIndex]);
+                }
+
+                yield return new WaitForSeconds(delayBetweenLines);
+            }
+
+          
+
+            // Clear any previous choice buttons
+            foreach (Transform child in choiceButtonParent)
+            {
+                Destroy(child.gameObject);
+            }
+
+            // Create choice buttons
+            for (int i = 0; i < choiceNode.choices.Count; i++)
+            {
+                GameObject button = Instantiate(choiceButtonPrefab, choiceButtonParent);
+                button.GetComponentInChildren<TMP_Text>().text = choiceNode.choices[i];
+                int choiceIndex = i; // Capture index for the button click event
+                button.GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(choiceNode, choiceIndex));  
+                button.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    dialogue.text = null;
+                    foreach (Transform child in choiceButtonParent)
+                    {
+                        Destroy(child.gameObject);
+                    }
+                });
+            }
+         
+            //yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+          
+        }
+        else if(dataParts[0] == "End")
+        {
+            dialogue.text = null;
+            //---------CLOSE DIALOGUE----------//
+        }
     }
 
     public void NextNode(string fieldName)
@@ -128,4 +205,12 @@ public class NodeParser : MonoBehaviour
         _parser = StartCoroutine(ParseNode());
     }
 
+    // Handle choice selection
+    void OnChoiceSelected(ChoiceNode node, int index)
+    {
+        NodePort port = node.GetOutputPort("choices " + index);
+        graph.current = port.Connection?.node as BaseNode;
+        // Restart the node parser
+        _parser = StartCoroutine(ParseNode());
+    }
 }

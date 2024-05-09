@@ -11,7 +11,6 @@ public class DialogueNode : BaseNode
     public string dialogueLine;
     public Sprite sprite;
     public float delayBetweenLines;
-    [Header("Text sound")]
     [SerializeField]
     private AudioClip[] sound;
 
