@@ -21,7 +21,18 @@ public class NodeParser : MonoBehaviour
     public float delayBetweenLines;
     public AudioClip[] sounds;
 
-    private void Start()
+    private void OnEnable()
+    {
+        DialogueEventManager.PanelActivated += StartingPoint;
+        //DialogueEventManager.PanelDeactivated += OnPanelDeactivated;
+    }
+
+    private void OnDisable()
+    {
+        DialogueEventManager.PanelActivated -= StartingPoint;
+        //DialogueEventManager.PanelDeactivated -= OnPanelDeactivated;
+    }
+    private void StartingPoint()
     {
         
         // Find the "Start" node and set it as the current node
