@@ -21,38 +21,45 @@ public class NodeParser : MonoBehaviour
     public float delayBetweenLines;
     public AudioClip[] sounds;
 
+    private BaseNode lastNode; // Store the last node accessed
     private void OnEnable()
     {
         DialogueEventManager.PanelActivated += StartingPoint;
-        //DialogueEventManager.PanelDeactivated += OnPanelDeactivated;
+        DialogueEventManager.PanelDeactivated += CloseDialogue;
     }
 
     private void OnDisable()
     {
         DialogueEventManager.PanelActivated -= StartingPoint;
-        //DialogueEventManager.PanelDeactivated -= OnPanelDeactivated;
+        DialogueEventManager.PanelDeactivated -= CloseDialogue;
     }
     private void StartingPoint()
     {
-        
-        // Find the "Start" node and set it as the current node
-        foreach (BaseNode b in graph.nodes)
+        if (lastNode != null)
         {
-            if (b.GetString() == "Start")
+            graph.current = lastNode;
+        }
+        else
+        {
+            // Find the "Start" node and set it as the current node
+            foreach (BaseNode b in graph.nodes)
             {
-                graph.current = b;
-                break;
+                if (b.GetString() == "Start")
+                {
+                    graph.current = b;
+                    break;
+                }
+
             }
         }
-
-        
         // Start the node parsing coroutine
         _parser = StartCoroutine(ParseNode());
     }
 
+
     private IEnumerator ParseNode()
     {
-        
+
 
         BaseNode b = graph.current;
         if (b == null)
@@ -71,7 +78,7 @@ public class NodeParser : MonoBehaviour
         // Start node logic
         if (dataParts[0] == "Start")
         {
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            //yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
             NextNode("exit");
         }
         // Dialogue node logic
@@ -158,7 +165,7 @@ public class NodeParser : MonoBehaviour
                 yield return new WaitForSeconds(delayBetweenLines);
             }
 
-          
+
 
             // Clear any previous choice buttons
             foreach (Transform child in choiceButtonParent)
@@ -172,7 +179,7 @@ public class NodeParser : MonoBehaviour
                 GameObject button = Instantiate(choiceButtonPrefab, choiceButtonParent);
                 button.GetComponentInChildren<TMP_Text>().text = choiceNode.choices[i];
                 int choiceIndex = i; // Capture index for the button click event
-                button.GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(choiceNode, choiceIndex));  
+                button.GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(choiceNode, choiceIndex));
                 button.GetComponent<Button>().onClick.AddListener(() =>
                 {
                     dialogue.text = null;
@@ -182,17 +189,26 @@ public class NodeParser : MonoBehaviour
                     }
                 });
             }
-         
+
             //yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-          
+
         }
-        else if(dataParts[0] == "End")
+        else if (dataParts[0] == "End")
         {
-            dialogue.text = null;
+            CloseDialogue();
+
             //---------CLOSE DIALOGUE----------//
         }
     }
-
+    public void CloseDialogue()
+    {
+        lastNode = graph.current;
+        dialogue.text = null;
+        foreach (Transform child in choiceButtonParent)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     public void NextNode(string fieldName)
     {
         // Stop the currently running parsing coroutine

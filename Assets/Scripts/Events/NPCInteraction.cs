@@ -32,7 +32,7 @@ public class NPCInteraction : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No DialogueEventManager found in the scene.");
+                Debug.Log("No DialogueEventManager found in the scene.");
             }
         }
     }
