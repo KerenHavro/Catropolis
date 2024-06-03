@@ -21328,6 +21328,7 @@ MonoBehaviour:
   prerequisite: {fileID: 1730172774}
   playerData: {fileID: 1906601445}
   graph: {fileID: 11400000, guid: fac679154c20f674eba6b5be5325c25d, type: 2}
+  DialogueHolder: {fileID: 7891985398893429619}
   speaker: {fileID: 776458351}
   dialogue: {fileID: 1958564934595296833}
   speakerImage: {fileID: 7335822920940950528}

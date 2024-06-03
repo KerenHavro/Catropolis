@@ -13,6 +13,7 @@ public class NodeParser : MonoBehaviour
     private Coroutine _parser;
 
     // Use TextMeshPro instead of Unity's built-in UI Text
+    public GameObject DialogueHolder;
     public TMP_Text speaker;
     public TMP_Text dialogue;
     public Image speakerImage;
@@ -125,6 +126,7 @@ public class NodeParser : MonoBehaviour
 
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
             dialogue.text = null;
+            lastNode = graph.current;
             NextNode("exit");
         }
         // Choice node logic
@@ -197,6 +199,7 @@ public class NodeParser : MonoBehaviour
         }
         else if (dataParts[0] == "End")
         {
+
             CloseDialogue();
 
             //---------CLOSE DIALOGUE----------//
@@ -204,8 +207,8 @@ public class NodeParser : MonoBehaviour
     }
     public void CloseDialogue()
     {
-        lastNode = graph.current;
-        dialogue.text = null;
+        DialogueHolder.SetActive(false);
+        
         foreach (Transform child in choiceButtonParent)
         {
             Destroy(child.gameObject);
