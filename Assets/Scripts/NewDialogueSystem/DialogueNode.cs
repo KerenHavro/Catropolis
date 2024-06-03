@@ -16,18 +16,7 @@ public class DialogueNode : BaseNode
 
     public List<Prerequisite> prerequisite;
 
-    public override bool GetArePrerequisiteMet(PlayerData playerData)
-    {
-        foreach (var prerequisite in prerequisites)
-        {
-            if (!prerequisite.IsMet(playerData))
-            {
-                return false;
-            }
-        }
-        return true;
-
-    }
+ 
     public override string GetString()
     {
         return "DialogueNode/" + speakerName + "/" + dialogueLine;

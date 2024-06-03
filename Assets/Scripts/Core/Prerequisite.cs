@@ -9,6 +9,7 @@ public class Prerequisite : MonoBehaviour
     public string key;
     public int value;
 
+
     public bool IsMet(PlayerData playerData)
     {
         switch (type)

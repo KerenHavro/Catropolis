@@ -64,7 +64,7 @@ public class NodeParser : MonoBehaviour
 
 
         BaseNode b = graph.current;
-        if (b == null || !b.GetArePrerequisiteMet(playerData))
+        if (b == null || !b.ArePrerequisitesMet(playerData))
         {
             yield break; // Exit if there's no current node to parse
         }
