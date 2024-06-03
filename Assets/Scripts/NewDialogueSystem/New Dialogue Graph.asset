@@ -43,6 +43,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  prerequisites: []
   entry: 0
   exit: 0
   speakerName: 1
@@ -52,6 +53,7 @@ MonoBehaviour:
   sound:
   - {fileID: 8300000, guid: 84df177abc6030040920ff44f722c9cf, type: 3}
   - {fileID: 8300000, guid: 8f3f0937e07d56840a31849e47174438, type: 3}
+  prerequisite: []
 --- !u!114 &-4946652665417967299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +97,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  prerequisites: []
   entry: 0
   exit: 0
   speakerName: first speaker
@@ -104,6 +107,7 @@ MonoBehaviour:
   sound:
   - {fileID: 8300000, guid: 84df177abc6030040920ff44f722c9cf, type: 3}
   - {fileID: 8300000, guid: 8f3f0937e07d56840a31849e47174438, type: 3}
+  prerequisite: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +158,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  prerequisites: []
   exit: 0
 --- !u!114 &4097976295119145358
 MonoBehaviour:
@@ -222,6 +227,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+  prerequisites: []
   entry: 0
   choices:
   - 1
@@ -274,6 +280,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  prerequisites: []
   entry: 0
   exit: 0
   speakerName: 2
@@ -283,6 +290,7 @@ MonoBehaviour:
   sound:
   - {fileID: 8300000, guid: 84df177abc6030040920ff44f722c9cf, type: 3}
   - {fileID: 8300000, guid: 8f3f0937e07d56840a31849e47174438, type: 3}
+  prerequisite: []
 --- !u!114 &8673014460116814230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,4 +324,5 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  prerequisites: []
   entry: 0

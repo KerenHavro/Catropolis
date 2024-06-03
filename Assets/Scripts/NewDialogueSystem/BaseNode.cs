@@ -6,7 +6,12 @@ using XNode;
 
 public abstract class BaseNode : Node
 {
+    public List<Prerequisite> prerequisites;
 
+    public virtual bool GetArePrerequisiteMet(PlayerData playerData)
+    {
+        return playerData;
+    }
     public virtual string GetString()
     {
         return null;

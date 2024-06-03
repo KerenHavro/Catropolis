@@ -7,6 +7,8 @@ using XNode;
 
 public class NodeParser : MonoBehaviour
 {
+    public Prerequisite prerequisite;
+    public PlayerData playerData;
     public DialogueGraph graph;
     private Coroutine _parser;
 
@@ -62,7 +64,7 @@ public class NodeParser : MonoBehaviour
 
 
         BaseNode b = graph.current;
-        if (b == null)
+        if (b == null || !b.GetArePrerequisiteMet(playerData))
         {
             yield break; // Exit if there's no current node to parse
         }

@@ -14,7 +14,13 @@ public class DialogueNode : BaseNode
     [SerializeField]
     private AudioClip[] sound;
 
+    public List<Prerequisite> prerequisite;
 
+    public override bool GetArePrerequisiteMet(PlayerData playerData)
+    {
+        return playerData;
+    
+    }
     public override string GetString()
     {
         return "DialogueNode/" + speakerName + "/" + dialogueLine;

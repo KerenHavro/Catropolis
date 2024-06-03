@@ -5448,7 +5448,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.880001, y: 0.12000084, z: -10}
+  m_LocalPosition: {x: -3.1699982, y: 0.62999916, z: -10}
   m_LocalScale: {x: 1, y: 11, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11965,7 +11965,7 @@ Transform:
   m_GameObject: {fileID: 1028237708}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.880001, y: 0.12000084, z: -10}
+  m_LocalPosition: {x: -3.1699982, y: 0.62999916, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18881,7 +18881,7 @@ Transform:
   m_GameObject: {fileID: 1681184348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.88, y: 0.12, z: 0}
+  m_LocalPosition: {x: -3.17, y: 0.63, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21239,6 +21239,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1906601442}
   - component: {fileID: 1906601443}
+  - component: {fileID: 1906601445}
+  - component: {fileID: 1906601444}
   m_Layer: 5
   m_Name: NodeParser
   m_TagString: Untagged
@@ -21277,6 +21279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cc8f0d125045341bc700d36a7df806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prerequisite: {fileID: 1906601444}
+  playerData: {fileID: 1906601445}
   graph: {fileID: 11400000, guid: fac679154c20f674eba6b5be5325c25d, type: 2}
   speaker: {fileID: 776458351}
   dialogue: {fileID: 1958564934595296833}
@@ -21285,6 +21289,34 @@ MonoBehaviour:
   choiceButtonParent: {fileID: 121772814}
   delayBetweenLines: 0
   sounds: []
+--- !u!114 &1906601444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906601441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be35f4d0de9ae2644b374f8ad96636bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  key: 
+  value: 0
+--- !u!114 &1906601445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906601441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab012ffba42eca45acfed5ef80f6d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 0
 --- !u!1 &1922748932
 GameObject:
   m_ObjectHideFlags: 0
@@ -28594,7 +28626,6 @@ GameObject:
   - component: {fileID: 4219339626847600519}
   - component: {fileID: 8556775291009645831}
   - component: {fileID: 8556775291009645830}
-  - component: {fileID: 8556775291009645829}
   m_Layer: 0
   m_Name: Bazaar
   m_TagString: NPC
@@ -29662,19 +29693,6 @@ Transform:
   - {fileID: 7045770328984580918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8556775291009645829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894964452468047085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 505783ae9590f0649ab04b80c6ec322b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PanelImage: {fileID: 7891985398893429619}
 --- !u!114 &8556775291009645830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29688,6 +29706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialoguePanelActive: 0
+  PanelImage: {fileID: 7891985398893429619}
 --- !u!114 &8556775291009645831
 MonoBehaviour:
   m_ObjectHideFlags: 0
