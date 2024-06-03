@@ -18,8 +18,15 @@ public class DialogueNode : BaseNode
 
     public override bool GetArePrerequisiteMet(PlayerData playerData)
     {
-        return playerData;
-    
+        foreach (var prerequisite in prerequisites)
+        {
+            if (!prerequisite.IsMet(playerData))
+            {
+                return false;
+            }
+        }
+        return true;
+
     }
     public override string GetString()
     {
