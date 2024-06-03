@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XNode;
 
-public class BaseNode : Node
+public abstract class BaseNode : Node
 {
 
     public virtual string GetString()
