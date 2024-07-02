@@ -119,6 +119,7 @@ public class NodeParser : MonoBehaviour
                 {
                     int randomIndex = Random.Range(0, sounds.Length);
                     SoundManager.instance.PlaySound(sounds[randomIndex]);
+                    Debug.Log("sound");
                 }
 
                 yield return new WaitForSeconds(delayBetweenLines);
@@ -164,6 +165,7 @@ public class NodeParser : MonoBehaviour
                 {
                     int randomIndex = Random.Range(0, sounds.Length);
                     SoundManager.instance.PlaySound(sounds[randomIndex]);
+                    
                 }
 
                 yield return new WaitForSeconds(delayBetweenLines);
@@ -208,7 +210,7 @@ public class NodeParser : MonoBehaviour
     public void CloseDialogue()
     {
         DialogueHolder.SetActive(false);
-        
+        dialogue.text = null;
         foreach (Transform child in choiceButtonParent)
         {
             Destroy(child.gameObject);

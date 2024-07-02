@@ -28,6 +28,7 @@ public class NPCInteraction : MonoBehaviour
             DialogueEventManager dialogueManager = FindObjectOfType<DialogueEventManager>();
             if (dialogueManager != null)
             {
+                Debug.Log("no dialogue.");
                 dialogueManager.DeactivatePanel();
             }
             else
